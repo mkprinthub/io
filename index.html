@@ -4,11 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>M.K. PRINT</title>
-  <link rel="icon" type="image/png" href="icon.png">
+<link rel="icon" type="image/png" href="icon.png">
   <!-- Non-blocking stylesheet links + clean built-in fallback styling so UI renders immediately -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" media="print" onload="this.media='all'">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
   <style>
     :root {
       --primary-color: #0d6efd;
@@ -68,56 +67,47 @@
       width: 100%;
     }
     .col-12 { width: 100%; }
-    .col-md-4 { width: 100%; }
     .col-md-6 { width: 100%; }
     @media (min-width: 768px) {
-      .col-md-4 { width: 33.3333%; }
       .col-md-6 { width: 50%; }
-      .col-lg-4 { width: 33.3333%; }
       .col-lg-7 { width: 58.3333%; }
     }
     .justify-content-center { justify-content: center; }
     .justify-content-between { justify-content: space-between; }
     .justify-content-end { justify-content: flex-end; }
     .align-items-center { align-items: center; }
+    .align-items-start { align-items: flex-start; }
     .flex-grow-1 { flex-grow: 1; }
     .flex-fill { flex: 1 1 auto; }
     .flex-wrap { flex-wrap: wrap; }
     .d-flex { display: flex; }
-    .d-grid { display: grid; }
     .d-block { display: block; }
     .d-none { display: none !important; }
     .gap-1 { gap: 0.25rem; }
     .gap-2 { gap: 0.5rem; }
-    .g-2 { gap: 0.5rem; }
     .g-3 { gap: 0.75rem; }
     .mb-0 { margin-bottom: 0; }
     .mb-1 { margin-bottom: 0.25rem; }
     .mb-2 { margin-bottom: 0.5rem; }
     .mb-3 { margin-bottom: 1rem; }
     .mb-4 { margin-bottom: 1.5rem; }
-    .mt-1 { margin-top: 0.25rem; }
     .mt-2 { margin-top: 0.5rem; }
     .mt-3 { margin-top: 1rem; }
     .my-4 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
-    .my-5 { margin-top: 2.5rem; margin-bottom: 2.5rem; }
     .mx-3 { margin-left: 1rem; margin-right: 1rem; }
     .me-1 { margin-right: 0.25rem; }
     .me-2 { margin-right: 0.5rem; }
     .ms-1 { margin-left: 0.25rem; }
-    .p-2 { padding: 0.5rem; }
     .p-3 { padding: 1rem; }
     .p-4 { padding: 1.5rem; }
     .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
     .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
     .px-4 { padding-left: 1rem; padding-right: 1rem; }
     .py-0 { padding-top: 0; padding-bottom: 0; }
-    .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
     .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-    .py-5 { padding-top: 3rem; padding-bottom: 3rem; }
+    .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
     .w-100 { width: 100%; }
     .h-100 { height: 100%; }
-    .text-center { text-align: center; }
     .text-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .fw-bold { font-weight: 700; }
     .fw-semibold { font-weight: 600; }
@@ -139,12 +129,10 @@
     .bg-success { background-color: #198754; }
     .bg-danger { background-color: #dc3545; }
     .bg-warning { background-color: #ffc107; }
-    .bg-info { background-color: #0dcaf0; }
     .bg-dark { background-color: #1e293b; }
     .bg-light { background-color: #f8fafc; }
     .bg-white { background-color: #ffffff; }
     .bg-black { background-color: #000000; }
-    .rounded { border-radius: 6px; }
     .rounded-circle { border-radius: 50%; }
     .border-top { border-top: 1px solid #e2e8f0; }
     .border-bottom { border-bottom: 1px solid #e2e8f0; }
@@ -203,15 +191,10 @@
       font-size: 0.82rem;
     }
     .btn-primary { background-color: #0d6efd; color: #ffffff; border-color: #0d6efd; }
-    .btn-light { background-color: #ffffff; color: #1e293b; border-color: #e2e8f0; }
-    .btn-warning { background-color: #ffc107; color: #1e293b; border-color: #ffc107; }
-    .btn-danger { background-color: #dc3545; color: #ffffff; border-color: #dc3545; }
     .btn-outline-primary { background-color: #ffffff; color: #0d6efd; border-color: #0d6efd; }
     .btn-outline-success { background-color: #ffffff; color: #198754; border-color: #198754; }
     .btn-outline-danger { background-color: #ffffff; color: #dc3545; border-color: #dc3545; }
-    .btn-outline-secondary { background-color: #ffffff; color: #475569; border-color: #94a3b8; }
     .btn-outline-warning { background-color: transparent; color: #ffc107; border-color: #ffc107; }
-    .btn-outline-light { background-color: transparent; color: #ffffff; border-color: rgba(255, 255, 255, 0.7); }
 
     .btn-close {
       position: relative;
@@ -253,7 +236,6 @@
     }
     .alert-success { background-color: #d1e7dd; color: #0f5132; border-color: #badbcc; }
     .alert-danger { background-color: #f8d7da; color: #842029; border-color: #f5c2c7; }
-    .alert-warning { background-color: #fff3cd; color: #664d03; border-color: #ffecb5; }
 
     .card {
       background-color: var(--card-bg);
@@ -275,9 +257,6 @@
       border-color: #0d6efd;
       background: #eff6ff;
     }
-
-    .badge-bw { background-color: #475569; color: #ffffff; }
-    .badge-color { background-color: #e11d48; color: #ffffff; }
 
     .custom-modal-backdrop {
       position: fixed;
@@ -324,13 +303,11 @@
     }
 
     .compact-file-list::-webkit-scrollbar,
-    .modal-file-scroll::-webkit-scrollbar,
-    .queue-files-scroll::-webkit-scrollbar {
+    .modal-file-scroll::-webkit-scrollbar {
       width: 6px;
     }
     .compact-file-list::-webkit-scrollbar-thumb,
-    .modal-file-scroll::-webkit-scrollbar-thumb,
-    .queue-files-scroll::-webkit-scrollbar-thumb {
+    .modal-file-scroll::-webkit-scrollbar-thumb {
       background-color: #cbd5e1;
       border-radius: 6px;
     }
@@ -339,27 +316,6 @@
       max-height: 60vh;
       overflow-y: auto;
       padding-right: 4px;
-    }
-
-    .queue-files-scroll {
-      max-height: 220px;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-
-    .queue-file-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px 8px;
-      border-radius: 6px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      margin-bottom: 5px;
-      gap: 6px;
-    }
-    .queue-file-row:last-child {
-      margin-bottom: 0;
     }
 
     .custom-progress-container {
@@ -385,14 +341,6 @@
         <i class="bi bi-printer-fill fs-4"></i>
         <span>M.K. PRINT</span>
       </a>
-      <div class="d-flex gap-2">
-        <button type="button" class="btn btn-light text-primary fw-semibold btn-sm" id="btnCustomerView" onclick="switchTab('customer')">
-          <i class="bi bi-upload me-1"></i> Customer View
-        </button>
-        <button type="button" class="btn btn-outline-light btn-sm" id="btnPrintQueue" onclick="switchTab('queue')">
-          <i class="bi bi-list-task me-1"></i> Print Queue
-        </button>
-      </div>
     </div>
   </nav>
 
@@ -495,7 +443,7 @@
 
                 <div class="col-12">
                   <label class="form-label fw-semibold" for="custNote">Special Note / Instructions <span class="text-muted fw-normal">(Optional)</span></label>
-                  <input type="text" class="form-control" id="custNote" placeholder="e.g. Spiral binding needed, Page 1 to 5 only, etc.">
+                  <input type="text" class="form-control" id="custNote" placeholder="Page 1-5 or Page 1,3 or Spiral or Laminate">
                 </div>
               </div>
 
@@ -519,60 +467,6 @@
       </div>
     </div>
 
-    <!-- PRINT QUEUE (ADMIN VIEW) -->
-    <div id="queueSection" class="d-none">
-      <div id="pinScreen" class="row justify-content-center my-5">
-        <div class="col-md-4">
-          <div class="card p-4 text-center">
-            <i class="bi bi-shield-lock-fill text-primary fs-1 mb-2"></i>
-            <h5 class="fw-bold mb-1">Print Queue Locked</h5>
-            <p class="text-muted small mb-3">Enter Admin PIN to view print orders</p>
-            <input type="password" id="pinInput" class="form-control text-center fs-4 mb-3" placeholder="****" maxlength="8" onkeydown="if(event.key==='Enter') verifyPin()">
-            <button type="button" id="unlockBtn" class="btn btn-primary w-100 fw-bold" onclick="verifyPin()">Unlock Queue</button>
-            <div id="pinError" class="text-danger small mt-2 d-none">Incorrect PIN!</div>
-          </div>
-        </div>
-      </div>
-
-      <div id="queueContent" class="d-none">
-        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-          <div>
-            <h4 class="fw-bold mb-0">Print Queue</h4>
-            <p class="text-muted small mb-0">Live orders synced with IST (Indian Standard Time)</p>
-          </div>
-          <div class="d-flex gap-2 flex-wrap">
-            <button type="button" class="btn btn-outline-primary btn-sm" onclick="fetchOrders()"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearQueue()">Clear Queue List</button>
-            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="lockQueue()">Lock Queue</button>
-          </div>
-        </div>
-        <div id="queueList" class="row g-3"></div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Confirm Modal -->
-  <div id="confirmModalOverlay" class="d-none custom-modal-backdrop" style="z-index: 1055;" onclick="if(event.target === this) closeConfirmModal(false)">
-    <div class="card p-4 shadow-lg mx-3" style="max-width: 400px; width: 100%;">
-      <h5 class="fw-bold text-danger mb-2"><i class="bi bi-exclamation-triangle-fill me-1"></i> Confirm Action</h5>
-      <p id="confirmModalText" class="text-muted small mb-4">Clear queue list? (Files in Google Drive will remain saved)</p>
-      <div class="d-flex justify-content-end gap-2">
-        <button type="button" class="btn btn-outline-secondary btn-sm px-3" onclick="closeConfirmModal(false)">Cancel</button>
-        <button type="button" class="btn btn-danger btn-sm px-3 fw-semibold" onclick="closeConfirmModal(true)">Yes, Clear</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Notice Modal -->
-  <div id="noticeModalOverlay" class="d-none custom-modal-backdrop" style="z-index: 1060;" onclick="if(event.target === this) closeNoticeModal()">
-    <div class="card p-4 shadow-lg mx-3" style="max-width: 400px; width: 100%;">
-      <h5 class="fw-bold text-primary mb-2"><i class="bi bi-info-circle-fill me-1"></i> Notice</h5>
-      <p id="noticeModalText" class="text-muted small mb-4"></p>
-      <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-primary btn-sm px-4 fw-semibold" onclick="closeNoticeModal()">OK</button>
-      </div>
-    </div>
   </div>
 
   <!-- Selected Files Popup Modal -->
@@ -593,28 +487,6 @@
           <i class="bi bi-trash me-1"></i> Clear All
         </button>
         <button type="button" class="btn btn-primary btn-sm px-4 fw-semibold" onclick="closeFilesPopup()">Done</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Order Files View All Modal (Admin Print Queue) -->
-  <div id="orderFilesModal" class="d-none custom-modal-backdrop" style="z-index: 1052;" onclick="if(event.target === this) closeOrderFilesPopup()">
-    <div class="card shadow-lg mx-3 overflow-hidden" style="max-width: 620px; width: 100%;">
-      <div class="bg-primary text-white px-4 py-3 d-flex justify-content-between align-items-center">
-        <div>
-          <h6 class="fw-bold mb-0"><i class="bi bi-folder2-open me-1"></i> <span id="orderModalTitle">Order Files</span></h6>
-          <small style="opacity: 0.85;" id="orderModalSubtitle">0 Files</small>
-        </div>
-        <button type="button" class="btn-close btn-close-white" aria-label="Close" onclick="closeOrderFilesPopup()"></button>
-      </div>
-      <div class="p-3 bg-light">
-        <div id="orderModalFileListContainer" class="modal-file-scroll"></div>
-      </div>
-      <div class="px-4 py-2 bg-white border-top d-flex justify-content-between align-items-center">
-        <button type="button" class="btn btn-primary btn-sm fw-semibold" id="orderModalZipBtn">
-          <i class="bi bi-file-earmark-zip-fill me-1"></i> Download All as ZIP
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm px-4 fw-semibold" onclick="closeOrderFilesPopup()">Close</button>
       </div>
     </div>
   </div>
@@ -647,45 +519,19 @@
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRO0bbbm5yhNtYFBBO5ctzyKe-TsTFDBGptjl-k849m7iIuzPGpZ5mRmOsxH5uDGQY/exec";
-    const ORDER_STORAGE_KEY = "mk_print_last_order_no";
-    const ORDER_DATE_STORAGE_KEY = "mk_print_last_order_date";
     const UPLOAD_BATCH_MAX_FILES = 5;
     const UPLOAD_BATCH_MAX_BYTES = 4 * 1024 * 1024; // ~4 MB per batch
     const UPLOAD_REQUEST_TIMEOUT_MS = 90000;
     const UPLOAD_MAX_RETRIES = 3;
-    const ORDER_MERGE_WINDOW_MINUTES = 20;
 
-    let orders = [];
     let selectedFiles = [];
     let fileUploadStatuses = [];
     let cameraImgCounter = 0;
-    let sessionPin = "";
-    let confirmCallback = null;
-    let currentOrderModalIndex = null;
     let cameraStream = null;
     let cameraTrack = null;
     let torchEnabled = false;
     let cameraFeedbackTimer = null;
     let alertDismissTimer = null;
-    const memoryStorage = {};
-
-    // Sandbox-safe storage helpers
-    function safeStorageGet(key) {
-      try {
-        return window.localStorage.getItem(key);
-      } catch (e) {
-        return Object.prototype.hasOwnProperty.call(memoryStorage, key) ? memoryStorage[key] : null;
-      }
-    }
-
-    function safeStorageSet(key, val) {
-      memoryStorage[key] = String(val);
-      try {
-        window.localStorage.setItem(key, String(val));
-      } catch (e) {
-        // Fallback already stored in memoryStorage
-      }
-    }
 
     function safeScrollTop() {
       try {
@@ -706,44 +552,6 @@
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
-    }
-
-    function showNoticeModal(msg) {
-      const overlay = document.getElementById('noticeModalOverlay');
-      const textEl = document.getElementById('noticeModalText');
-      if (overlay && textEl) {
-        textEl.textContent = msg;
-        overlay.classList.remove('d-none');
-      }
-    }
-
-    function closeNoticeModal() {
-      const overlay = document.getElementById('noticeModalOverlay');
-      if (overlay) {
-        overlay.classList.add('d-none');
-      }
-    }
-
-    function openConfirmModal(msg, onConfirm) {
-      const overlay = document.getElementById('confirmModalOverlay');
-      const textEl = document.getElementById('confirmModalText');
-      if (overlay && textEl) {
-        textEl.textContent = msg;
-        confirmCallback = typeof onConfirm === 'function' ? onConfirm : null;
-        overlay.classList.remove('d-none');
-      }
-    }
-
-    function closeConfirmModal(accepted) {
-      const overlay = document.getElementById('confirmModalOverlay');
-      if (overlay) {
-        overlay.classList.add('d-none');
-      }
-      const cb = confirmCallback;
-      confirmCallback = null;
-      if (accepted && cb) {
-        cb();
-      }
     }
 
     function padImgNumber(num) {
@@ -793,283 +601,6 @@
         }
       }
       cameraImgCounter = seq;
-    }
-
-    function formatOrderNumber(num) {
-      const parsed = parseInt(String(num || "").replace(/\D/g, ""), 10);
-      if (!parsed || parsed < 1) return "01";
-      return parsed < 10 ? "0" + parsed : String(parsed);
-    }
-
-    function persistLastOrderNo(todayDateStr, orderNum) {
-      const parsed = parseInt(String(orderNum || "0").replace(/\D/g, ""), 10);
-      if (Number.isFinite(parsed) && parsed > 0) {
-        safeStorageSet(ORDER_DATE_STORAGE_KEY, todayDateStr);
-        safeStorageSet(ORDER_STORAGE_KEY, String(parsed));
-      }
-    }
-
-    function parseISTDateAndMinutes(ord) {
-      const formatted = formatOrderDateTimeIST(ord);
-      const match = formatted.match(/^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
-      if (!match) {
-        return { dateStr: '', totalMinutes: NaN };
-      }
-      const dateStr = `${match[1]}/${match[2]}/${match[3]}`;
-      let hour = parseInt(match[4], 10);
-      const minute = parseInt(match[5], 10);
-      const period = match[6].toUpperCase();
-      if (period === 'PM' && hour !== 12) hour += 12;
-      if (period === 'AM' && hour === 12) hour = 0;
-      return {
-        dateStr,
-        totalMinutes: (hour * 60) + minute
-      };
-    }
-
-    function buildOrderSignature(ord) {
-      const norm = (val) => String(val || '').trim().toLowerCase();
-      return [
-        norm(ord.name),
-        norm(ord.color),
-        norm(ord.copies),
-        norm(ord.size),
-        norm(ord.sides),
-        norm(ord.paperType),
-        norm(ord.note || 'None')
-      ].join('|');
-    }
-
-    function getFileDedupeKey(f, fallbackIdx) {
-      if (!f) return `empty:${fallbackIdx}`;
-      if (f.fileId) return `id:${String(f.fileId).trim()}`;
-      const urlPart = String(f.fileUrl || '').trim();
-      const namePart = String(f.fileName || '').trim().toLowerCase();
-      if (urlPart || namePart) {
-        return `un:${urlPart}|${namePart}`;
-      }
-      return `idx:${f.fileIndex || fallbackIdx}`;
-    }
-
-    function appendUniqueFilesToEntry(targetEntry, incomingFiles) {
-      const list = Array.isArray(incomingFiles) ? incomingFiles : [];
-      list.forEach((f, i) => {
-        if (!f) return;
-        const fKey = getFileDedupeKey(f, targetEntry.files.length + i);
-        if (!targetEntry._seenFileKeys.has(fKey)) {
-          targetEntry._seenFileKeys.add(fKey);
-          targetEntry.files.push(f);
-        }
-      });
-    }
-
-    function mergeOrderBatches(rawOrders) {
-      const list = Array.isArray(rawOrders) ? rawOrders : [];
-      const uploadIdMap = new Map();
-      const mergedEntries = [];
-
-      list.forEach((ord) => {
-        if (!ord || typeof ord !== 'object') return;
-        const rawUploadId = String(ord.uploadId || '').trim();
-        const hasValidUploadId = rawUploadId &&
-          rawUploadId.toLowerCase() !== 'undefined' &&
-          rawUploadId.toLowerCase() !== 'null';
-
-        const parsedTime = parseISTDateAndMinutes(ord);
-        const signature = buildOrderSignature(ord);
-        let matchedEntry = null;
-
-        if (hasValidUploadId && uploadIdMap.has(rawUploadId)) {
-          matchedEntry = uploadIdMap.get(rawUploadId);
-        }
-
-        if (!matchedEntry) {
-          for (let i = mergedEntries.length - 1; i >= 0; i--) {
-            const candidate = mergedEntries[i];
-            if (candidate._signature !== signature) continue;
-            if (!parsedTime.dateStr || candidate._dateStr !== parsedTime.dateStr) continue;
-            if (Number.isNaN(parsedTime.totalMinutes) || Number.isNaN(candidate._lastMinutes)) continue;
-
-            const diffMins = Math.abs(candidate._lastMinutes - parsedTime.totalMinutes);
-            if (diffMins <= ORDER_MERGE_WINDOW_MINUTES) {
-              matchedEntry = candidate;
-              break;
-            }
-          }
-        }
-
-        if (matchedEntry) {
-          appendUniqueFilesToEntry(matchedEntry, ord.files);
-
-          if (!Number.isNaN(parsedTime.totalMinutes)) {
-            if (Number.isNaN(matchedEntry._firstMinutes) || parsedTime.totalMinutes < matchedEntry._firstMinutes) {
-              matchedEntry._firstMinutes = parsedTime.totalMinutes;
-              matchedEntry.submissionTime = ord.submissionTime || matchedEntry.submissionTime;
-              matchedEntry.time = ord.time || matchedEntry.time;
-            }
-            if (Number.isNaN(matchedEntry._lastMinutes) || parsedTime.totalMinutes > matchedEntry._lastMinutes) {
-              matchedEntry._lastMinutes = parsedTime.totalMinutes;
-            }
-          }
-
-          if (hasValidUploadId && !uploadIdMap.has(rawUploadId)) {
-            uploadIdMap.set(rawUploadId, matchedEntry);
-          }
-        } else {
-          const seenKeys = new Set();
-          const entry = {
-            ...ord,
-            files: [],
-            _seenFileKeys: seenKeys,
-            _signature: signature,
-            _dateStr: parsedTime.dateStr,
-            _firstMinutes: parsedTime.totalMinutes,
-            _lastMinutes: parsedTime.totalMinutes
-          };
-          appendUniqueFilesToEntry(entry, ord.files);
-          if (hasValidUploadId) {
-            uploadIdMap.set(rawUploadId, entry);
-          }
-          mergedEntries.push(entry);
-        }
-      });
-
-      mergedEntries.forEach((entry) => {
-        if (entry.files.some(f => typeof f.fileIndex === 'number')) {
-          entry.files.sort((a, b) => (Number(a.fileIndex) || 0) - (Number(b.fileIndex) || 0));
-        }
-      });
-
-      return mergedEntries.map(({
-        _seenFileKeys,
-        _signature,
-        _dateStr,
-        _firstMinutes,
-        _lastMinutes,
-        ...cleanOrder
-      }) => cleanOrder);
-    }
-
-    function syncOrdersSequence(rawOrders, todayDateStr) {
-      const list = mergeOrderBatches(rawOrders);
-      const total = list.length;
-
-      const computed = list.map((ord, idx) => {
-        const seqNum = Math.max(1, total - idx);
-        return {
-          ...ord,
-          orderNo: formatOrderNumber(seqNum)
-        };
-      });
-
-      if (total > 0) {
-        persistLastOrderNo(todayDateStr, total);
-      }
-
-      return computed;
-    }
-
-    function switchTab(tab) {
-      const customerSec = document.getElementById('customerSection');
-      const queueSec = document.getElementById('queueSection');
-      const btnCust = document.getElementById('btnCustomerView');
-      const btnQueue = document.getElementById('btnPrintQueue');
-
-      if (tab === 'customer') {
-        closePortraitCameraModal();
-        if (customerSec) customerSec.classList.remove('d-none');
-        if (queueSec) queueSec.classList.add('d-none');
-        if (btnCust) btnCust.className = 'btn btn-light text-primary fw-semibold btn-sm';
-        if (btnQueue) btnQueue.className = 'btn btn-outline-light btn-sm';
-      } else {
-        closePortraitCameraModal();
-        if (customerSec) customerSec.classList.add('d-none');
-        if (queueSec) queueSec.classList.remove('d-none');
-        if (btnCust) btnCust.className = 'btn btn-outline-light btn-sm';
-        if (btnQueue) btnQueue.className = 'btn btn-light text-primary fw-semibold btn-sm';
-
-        if (sessionPin) {
-          fetchOrders();
-        } else {
-          const pinScreen = document.getElementById('pinScreen');
-          const queueContent = document.getElementById('queueContent');
-          if (pinScreen) pinScreen.classList.remove('d-none');
-          if (queueContent) queueContent.classList.add('d-none');
-        }
-      }
-    }
-
-    async function verifyPin() {
-      const pinInput = document.getElementById('pinInput');
-      const enteredPin = pinInput ? pinInput.value.trim() : '';
-      if (!enteredPin) return;
-
-      const btn = document.getElementById('unlockBtn');
-      const errBox = document.getElementById('pinError');
-      if (btn) {
-        btn.disabled = true;
-        btn.textContent = "Verifying...";
-      }
-      if (errBox) errBox.classList.add('d-none');
-
-      try {
-        const res = await fetch(`${SCRIPT_URL}?action=getOrders&pin=${encodeURIComponent(enteredPin)}`, {
-          method: 'GET',
-          redirect: 'follow'
-        });
-
-        const rawText = await res.text();
-        let data;
-        try {
-          data = JSON.parse(rawText);
-        } catch (parseErr) {
-          throw new Error("Invalid server response. Please check Apps Script deployment.");
-        }
-
-        if (data.status === 'unauthorized') {
-          if (errBox) {
-            errBox.textContent = data.message || "Incorrect PIN!";
-            errBox.classList.remove('d-none');
-          }
-        } else if (data.status === 'success' || Array.isArray(data)) {
-          sessionPin = enteredPin;
-          const istNow = getIndianDateTime();
-          const rawList = Array.isArray(data) ? data : (data.orders || []);
-          orders = syncOrdersSequence(rawList, istNow.dateOnly);
-          const pinScreen = document.getElementById('pinScreen');
-          const queueContent = document.getElementById('queueContent');
-          if (pinScreen) pinScreen.classList.add('d-none');
-          if (queueContent) queueContent.classList.remove('d-none');
-          if (pinInput) pinInput.value = '';
-          renderQueue();
-        } else {
-          if (errBox) {
-            errBox.textContent = data.message || "Unable to unlock queue.";
-            errBox.classList.remove('d-none');
-          }
-        }
-      } catch (err) {
-        if (errBox) {
-          errBox.textContent = (err && err.message) ? err.message : "Server error. Check connection.";
-          errBox.classList.remove('d-none');
-        }
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = "Unlock Queue";
-        }
-      }
-    }
-
-    function lockQueue() {
-      sessionPin = "";
-      orders = [];
-      const queueList = document.getElementById('queueList');
-      const pinScreen = document.getElementById('pinScreen');
-      const queueContent = document.getElementById('queueContent');
-      if (queueList) queueList.innerHTML = "";
-      if (pinScreen) pinScreen.classList.remove('d-none');
-      if (queueContent) queueContent.classList.add('d-none');
     }
 
     // Initialize drag-and-drop and UI state safely
@@ -1585,18 +1116,6 @@
       }
     }
 
-    function computeSynchronizedOrderNumbers(orderList) {
-      const list = orderList || [];
-      const total = list.length;
-      const result = new Array(total);
-
-      for (let i = 0; i < total; i++) {
-        const seqNum = Math.max(1, total - i);
-        result[i] = String(seqNum).padStart(2, '0');
-      }
-      return result;
-    }
-
     // Strict Indian Standard Time (IST) DD/MM/YYYY hh:mm AM/PM generator
     function getIndianDateTime(dateInput) {
       const now = dateInput ? new Date(dateInput) : new Date();
@@ -1634,45 +1153,6 @@
           fullDateTime: `${dd}/${mm}/${yyyy} ${String(h).padStart(2, '0')}:${min} ${ampm}`
         };
       }
-    }
-
-    function formatOrderDateTimeIST(ord) {
-      const rawStr = String((ord && (ord.submissionTime || ord.time)) || '').trim();
-      const dateMatch = rawStr.match(/(\d{2}\/\d{2}\/\d{4})/);
-      const time12Match = rawStr.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
-      const time24Match = rawStr.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);
-
-      const fallbackDate = ord && ord.submissionDate && /^\d{2}\/\d{2}\/\d{4}$/.test(String(ord.submissionDate).trim())
-        ? String(ord.submissionDate).trim()
-        : getIndianDateTime().dateOnly;
-
-      if (dateMatch && time12Match) {
-        return `${dateMatch[1]} ${time12Match[1].toUpperCase()}`;
-      }
-
-      if (time12Match) {
-        return `${fallbackDate} ${time12Match[1].toUpperCase()}`;
-      }
-
-      if (time24Match) {
-        let hour24 = parseInt(time24Match[1], 10);
-        const mins = time24Match[2];
-        const ampm = hour24 >= 12 ? 'PM' : 'AM';
-        hour24 = hour24 % 12;
-        hour24 = hour24 === 0 ? 12 : hour24;
-        const hour12Str = String(hour24).padStart(2, '0');
-        return `${dateMatch ? dateMatch[1] : fallbackDate} ${hour12Str}:${mins} ${ampm}`;
-      }
-
-      if (rawStr) {
-        const parsed = new Date(rawStr);
-        if (!isNaN(parsed.getTime())) {
-          return getIndianDateTime(parsed).fullDateTime;
-        }
-        return `${fallbackDate} ${rawStr}`;
-      }
-
-      return getIndianDateTime().fullDateTime;
     }
 
     function generateUploadSessionId() {
@@ -1803,7 +1283,7 @@
       if (progressSection) progressSection.classList.remove('d-none');
       if (progressBar) progressBar.style.width = `2%`;
       if (progressPercentText) progressPercentText.textContent = `0%`;
-      if (progressStatusText) progressStatusText.textContent = `Sending files...`;
+      if (progressStatusText) progressStatusText.textContent = `Sending...`;
       document.querySelectorAll('.file-remove-btn').forEach(b => { b.style.display = 'none'; });
 
       const totalFiles = selectedFiles.length;
@@ -1827,7 +1307,7 @@
           const isLastBatch = bIdx === batches.length - 1;
 
           if (progressStatusText) {
-            progressStatusText.textContent = `Sending batch ${bIdx + 1} of ${batches.length}...`;
+            progressStatusText.textContent = `Sending...`;
           }
 
           const batchFilesPayload = [];
@@ -1926,252 +1406,6 @@
         };
         reader.onerror = error => reject(error);
         reader.readAsDataURL(file);
-      });
-    }
-
-    async function fetchOrders() {
-      if (!sessionPin) return;
-      try {
-        const res = await fetch(`${SCRIPT_URL}?action=getOrders&pin=${encodeURIComponent(sessionPin)}`, {
-          method: 'GET',
-          redirect: 'follow'
-        });
-        const rawText = await res.text();
-        const data = JSON.parse(rawText);
-
-        if (data.status === 'unauthorized') {
-          lockQueue();
-          return;
-        }
-
-        if (data.status === 'success' || Array.isArray(data)) {
-          const istNow = getIndianDateTime();
-          const rawList = Array.isArray(data) ? data : (data.orders || []);
-          orders = syncOrdersSequence(rawList, istNow.dateOnly);
-          renderQueue();
-        }
-      } catch (err) {
-        console.error("Error fetching orders", err);
-      }
-    }
-
-    function extractDriveFileId(fileObj) {
-      if (!fileObj) return null;
-      if (fileObj.fileId) return fileObj.fileId;
-      if (!fileObj.fileUrl) return null;
-      const match = String(fileObj.fileUrl).match(/\/d\/([^\/]+)/);
-      return match ? match[1] : null;
-    }
-
-    function getDirectDownloadUrl(fileObj) {
-      const id = extractDriveFileId(fileObj);
-      if (id) return `https://drive.google.com/uc?export=download&id=${id}`;
-      return (fileObj && fileObj.fileUrl) ? fileObj.fileUrl : '#';
-    }
-
-    function openOrderFilesPopup(orderIndex) {
-      const ord = orders[orderIndex];
-      const modal = document.getElementById('orderFilesModal');
-      const titleEl = document.getElementById('orderModalTitle');
-      const subtitleEl = document.getElementById('orderModalSubtitle');
-      const listEl = document.getElementById('orderModalFileListContainer');
-      const zipBtn = document.getElementById('orderModalZipBtn');
-      if (!ord || !modal || !listEl) return;
-
-      currentOrderModalIndex = orderIndex;
-      const filesArr = Array.isArray(ord.files) ? ord.files : [];
-      if (titleEl) {
-        titleEl.textContent = `Order #${ord.orderNo || ''} — ${ord.name || 'Order'}`;
-      }
-      if (subtitleEl) {
-        subtitleEl.textContent = `${filesArr.length} File(s) • ${formatOrderDateTimeIST(ord)}`;
-      }
-
-      listEl.innerHTML = filesArr.map((f, idx) => {
-        const dlUrl = getDirectDownloadUrl(f);
-        return `
-          <div class="queue-file-row">
-            <span class="text-truncate me-2 small" style="max-width: 72%;" title="${escapeHtml(f.fileName)}">
-              <span class="text-muted fw-semibold me-1">${idx + 1}.</span>
-              <a href="${escapeHtml(f.fileUrl || '#')}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
-                ${escapeHtml(f.fileName)}
-              </a>
-            </span>
-            <a href="${escapeHtml(dlUrl)}" target="_blank" rel="noopener noreferrer" download="${escapeHtml(f.fileName)}" class="btn btn-outline-success btn-sm py-0 px-2" style="font-size: 11px;">
-              <i class="bi bi-download me-1"></i> Download
-            </a>
-          </div>
-        `;
-      }).join('');
-
-      if (zipBtn) {
-        zipBtn.onclick = () => downloadAllAsZip(orderIndex);
-      }
-
-      modal.classList.remove('d-none');
-    }
-
-    function closeOrderFilesPopup() {
-      const modal = document.getElementById('orderFilesModal');
-      currentOrderModalIndex = null;
-      if (modal) {
-        modal.classList.add('d-none');
-      }
-    }
-
-    function renderQueue() {
-      const container = document.getElementById('queueList');
-      if (!container) return;
-
-      if (orders.length === 0) {
-        container.innerHTML = `<div class="col-12 text-center py-5 text-muted">No print orders in queue.</div>`;
-        return;
-      }
-
-      const computedOrderNumbers = computeSynchronizedOrderNumbers(orders);
-
-      container.innerHTML = orders.map((ord, idx) => {
-        const displayTime = formatOrderDateTimeIST(ord);
-        const syncedOrderStr = computedOrderNumbers[idx];
-        ord.orderNo = syncedOrderStr;
-        const orderBadge = `Order #${syncedOrderStr}`;
-        const filesArr = Array.isArray(ord.files) ? ord.files : [];
-        return `
-          <div class="col-md-6 col-lg-4">
-            <div class="card p-3 h-100 d-flex flex-column">
-              <div class="d-flex justify-content-between align-items-center mb-2 gap-1 flex-wrap">
-                <span class="badge bg-primary text-white fw-bold">${escapeHtml(orderBadge)}</span>
-                <span class="badge bg-secondary text-white"><i class="bi bi-calendar-event me-1"></i>${escapeHtml(displayTime)}</span>
-              </div>
-              <h5 class="fw-bold mb-2">${escapeHtml(ord.name)}</h5>
-
-              <div class="mb-2 d-flex flex-wrap gap-1">
-                <span class="badge ${ord.color === 'Color' ? 'badge-color' : 'badge-bw'}">${escapeHtml(ord.color)}</span>
-                <span class="badge bg-primary text-white">${escapeHtml(ord.copies)} Copies</span>
-                <span class="badge bg-info text-dark">${escapeHtml(ord.size)}</span>
-                <span class="badge bg-warning text-dark">${escapeHtml(ord.paperType)}</span>
-                <span class="badge bg-dark text-white">${escapeHtml(ord.sides)}</span>
-              </div>
-
-              ${ord.note && ord.note !== 'None' ? `
-                <div class="alert alert-warning py-1 px-2 small mb-2">
-                  <i class="bi bi-pencil-square me-1"></i> <strong>Note:</strong> ${escapeHtml(ord.note)}
-                </div>
-              ` : ''}
-
-              <div class="bg-light p-2 rounded small mb-3 flex-grow-1">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                  <strong>Files (${filesArr.length}):</strong>
-                  ${filesArr.length > 4 ? `
-                    <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" style="font-size: 11px;" onclick="openOrderFilesPopup(${idx})">
-                      <i class="bi bi-arrows-fullscreen me-1"></i> View All (${filesArr.length})
-                    </button>
-                  ` : ''}
-                </div>
-                <div class="queue-files-scroll">
-                  ${filesArr.map((f, fIdx) => {
-                    const dlUrl = getDirectDownloadUrl(f);
-                    return `
-                      <div class="queue-file-row">
-                        <span class="text-truncate me-1" style="max-width: 68%;" title="${escapeHtml(f.fileName)}">
-                          <span class="text-muted fw-semibold me-1">${fIdx + 1}.</span>
-                          <a href="${escapeHtml(f.fileUrl || '#')}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
-                            ${escapeHtml(f.fileName)}
-                          </a>
-                        </span>
-                        <a href="${escapeHtml(dlUrl)}" target="_blank" rel="noopener noreferrer" download="${escapeHtml(f.fileName)}" class="btn btn-outline-success btn-sm py-0 px-2" style="font-size: 11px;" title="Download single file">
-                          <i class="bi bi-download me-1"></i> Download
-                        </a>
-                      </div>
-                    `;
-                  }).join('')}
-                </div>
-              </div>
-
-              <div class="mt-auto d-grid gap-2">
-                <button type="button" onclick="downloadAllAsZip(${idx})" id="zipBtn_${idx}" class="btn btn-primary btn-sm fw-bold">
-                  <i class="bi bi-file-earmark-zip-fill me-1"></i> Download All as ZIP (${filesArr.length} Files)
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    async function downloadAllAsZip(orderIndex) {
-      const ord = orders[orderIndex];
-      if (!ord || !Array.isArray(ord.files) || ord.files.length === 0) return;
-
-      if (typeof window.JSZip === 'undefined') {
-        showNoticeModal("ZIP library is unavailable or still loading. You can download individual files directly using each file's Download button.");
-        return;
-      }
-
-      const btn = document.getElementById(`zipBtn_${orderIndex}`);
-      const originalText = btn ? btn.innerHTML : '';
-      if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = `Preparing ZIP...`;
-      }
-
-      const zip = new window.JSZip();
-      let successCount = 0;
-
-      try {
-        for (let i = 0; i < ord.files.length; i++) {
-          const f = ord.files[i];
-          const fileId = extractDriveFileId(f);
-          if (!fileId) continue;
-
-          if (btn) {
-            btn.innerHTML = `Zipping (${i + 1}/${ord.files.length})...`;
-          }
-
-          const response = await fetch(`${SCRIPT_URL}?action=getFileBase64&pin=${encodeURIComponent(sessionPin)}&fileId=${encodeURIComponent(fileId)}`);
-          const fileData = await response.json();
-
-          if (fileData && fileData.status === 'success' && fileData.base64) {
-            zip.file(f.fileName, fileData.base64, { base64: true });
-            successCount++;
-          }
-        }
-
-        if (successCount > 0) {
-          const content = await zip.generateAsync({ type: "blob" });
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(content);
-          const safeOrderNo = ord.orderNo ? `Order_${ord.orderNo}_` : '';
-          link.download = `${safeOrderNo}${String(ord.name || 'Order').replace(/[^a-z0-9]/gi, '_')}_files.zip`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(link.href);
-        } else {
-          showNoticeModal("Could not fetch files for ZIP. Please try downloading individually.");
-        }
-      } catch (e) {
-        showNoticeModal("Error generating ZIP file.");
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerHTML = originalText;
-        }
-      }
-    }
-
-    function clearQueue() {
-      openConfirmModal("Clear queue list? (Files in Google Drive will remain saved)", async () => {
-        try {
-          const res = await fetch(`${SCRIPT_URL}?action=clearOrders&pin=${encodeURIComponent(sessionPin)}`);
-          const data = await res.json();
-          if (data && data.status === 'success') {
-            orders = [];
-            renderQueue();
-          }
-        } catch (err) {
-          showNoticeModal("Error clearing queue.");
-        }
       });
     }
   </script>
