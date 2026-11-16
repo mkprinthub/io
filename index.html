@@ -956,7 +956,7 @@
           addFiles([photoFile]);
           resequenceCameraImgFiles();
           updateFileListUI();
-          showCameraFeedback(`Saved ${fileName}`, "bg-success text-white");
+          showCameraFeedback(`${fileName}`, "bg-success text-white");
         }, 'image/jpeg', 0.92);
       } catch (err) {
         showCameraFeedback("Unable to capture photo", "bg-danger text-white");
