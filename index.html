@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M.K. PRINT</title>
+  <!-- Non-blocking stylesheet links + clean built-in fallback styling so UI renders immediately -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" media="print" onload="this.media='all'">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+  <style>
+    :root {
+      --primary-color: #0d6efd;
+      --bg-color: #f4f6f9;
+      --text-color: #1e293b;
+      --muted-color: #64748b;
+      --border-color: #cbd5e1;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Fallback layout & control utilities in case external Bootstrap CSS is slow or blocked */
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+    }
+    .navbar-dark {
+      background-color: #0d6efd;
+      color: #ffffff;
+    }
+    .navbar-brand {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+    }
+    .row > [class*="col-"] {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      width: 100%;
+    }
+    .col-12 { width: 100%; }
+    .col-md-4 { width: 100%; }
+    .col-md-6 { width: 100%; }
+    @media (min-width: 768px) {
+      .col-md-4 { width: 33.3333%; }
+      .col-md-6 { width: 50%; }
+      .col-lg-4 { width: 33.3333%; }
+      .col-lg-7 { width: 58.3333%; }
+    }
+    .justify-content-center { justify-content: center; }
+    .justify-content-between { justify-content: space-between; }
+    .justify-content-end { justify-content: flex-end; }
+    .align-items-center { align-items: center; }
+    .flex-grow-1 { flex-grow: 1; }
+    .flex-fill { flex: 1 1 auto; }
+    .flex-wrap { flex-wrap: wrap; }
+    .d-flex { display: flex; }
+    .d-grid { display: grid; }
+    .d-block { display: block; }
+    .d-none { display: none !important; }
+    .gap-1 { gap: 0.25rem; }
+    .gap-2 { gap: 0.5rem; }
+    .g-2 { gap: 0.5rem; }
+    .g-3 { gap: 0.75rem; }
+    .mb-0 { margin-bottom: 0; }
+    .mb-1 { margin-bottom: 0.25rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-3 { margin-bottom: 1rem; }
+    .mb-4 { margin-bottom: 1.5rem; }
+    .mt-1 { margin-top: 0.25rem; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-3 { margin-top: 1rem; }
+    .my-4 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+    .my-5 { margin-top: 2.5rem; margin-bottom: 2.5rem; }
+    .mx-3 { margin-left: 1rem; margin-right: 1rem; }
+    .me-1 { margin-right: 0.25rem; }
+    .me-2 { margin-right: 0.5rem; }
+    .ms-1 { margin-left: 0.25rem; }
+    .p-2 { padding: 0.5rem; }
+    .p-3 { padding: 1rem; }
+    .p-4 { padding: 1.5rem; }
+    .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .py-0 { padding-top: 0; padding-bottom: 0; }
+    .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .py-5 { padding-top: 3rem; padding-bottom: 3rem; }
+    .w-100 { width: 100%; }
+    .h-100 { height: 100%; }
+    .text-center { text-align: center; }
+    .text-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .fw-bold { font-weight: 700; }
+    .fw-semibold { font-weight: 600; }
+    .fw-normal { font-weight: 400; }
+    .text-uppercase { text-transform: uppercase; }
+    .small { font-size: 0.875rem; }
+    .fs-1 { font-size: 2rem; }
+    .fs-4 { font-size: 1.25rem; }
+    .fs-5 { font-size: 1.1rem; }
+    .text-primary { color: #0d6efd; }
+    .text-success { color: #198754; }
+    .text-danger { color: #dc3545; }
+    .text-warning { color: #ffc107; }
+    .text-muted { color: #64748b; }
+    .text-dark { color: #1e293b; }
+    .text-white { color: #ffffff; }
+    .bg-primary { background-color: #0d6efd; }
+    .bg-secondary { background-color: #6c757d; }
+    .bg-success { background-color: #198754; }
+    .bg-danger { background-color: #dc3545; }
+    .bg-warning { background-color: #ffc107; }
+    .bg-info { background-color: #0dcaf0; }
+    .bg-dark { background-color: #1e293b; }
+    .bg-light { background-color: #f8fafc; }
+    .bg-white { background-color: #ffffff; }
+    .bg-black { background-color: #000000; }
+    .rounded { border-radius: 6px; }
+    .rounded-circle { border-radius: 50%; }
+    .border-top { border-top: 1px solid #e2e8f0; }
+    .border-bottom { border-bottom: 1px solid #e2e8f0; }
+    .border-secondary { border-color: #475569; }
+    .shadow-sm { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); }
+    .shadow { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); }
+    .shadow-lg { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24); }
+    .overflow-hidden { overflow: hidden; }
+    .position-relative { position: relative; }
+    .position-absolute { position: absolute; }
+    .top-0 { top: 0; }
+    .start-0 { left: 0; }
+    .m-2 { margin: 0.5rem; }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .form-control, .form-select {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: #1e293b;
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+    }
+    .form-control:focus, .form-select:focus {
+      outline: none;
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.3;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+    .btn-sm {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.82rem;
+    }
+    .btn-primary { background-color: #0d6efd; color: #ffffff; border-color: #0d6efd; }
+    .btn-light { background-color: #ffffff; color: #1e293b; border-color: #e2e8f0; }
+    .btn-warning { background-color: #ffc107; color: #1e293b; border-color: #ffc107; }
+    .btn-danger { background-color: #dc3545; color: #ffffff; border-color: #dc3545; }
+    .btn-outline-primary { background-color: #ffffff; color: #0d6efd; border-color: #0d6efd; }
+    .btn-outline-success { background-color: #ffffff; color: #198754; border-color: #198754; }
+    .btn-outline-danger { background-color: #ffffff; color: #dc3545; border-color: #dc3545; }
+    .btn-outline-secondary { background-color: #ffffff; color: #475569; border-color: #94a3b8; }
+    .btn-outline-warning { background-color: transparent; color: #ffc107; border-color: #ffc107; }
+    .btn-outline-light { background-color: transparent; color: #ffffff; border-color: rgba(255, 255, 255, 0.7); }
+
+    .btn-close {
+      position: relative;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      opacity: 0.75;
+    }
+    .btn-close::before, .btn-close::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 20%;
+      width: 60%;
+      height: 2px;
+      background-color: currentColor;
+    }
+    .btn-close::before { transform: translateY(-50%) rotate(45deg); }
+    .btn-close::after { transform: translateY(-50%) rotate(-45deg); }
+    .btn-close-white { color: #ffffff; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 6px;
+      line-height: 1.1;
+    }
+
+    .alert {
+      position: relative;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+    .alert-success { background-color: #d1e7dd; color: #0f5132; border-color: #badbcc; }
+    .alert-danger { background-color: #f8d7da; color: #842029; border-color: #f5c2c7; }
+    .alert-warning { background-color: #fff3cd; color: #664d03; border-color: #ffecb5; }
+
+    .card {
+      background-color: var(--card-bg);
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .drop-zone {
+      border: 2px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 24px 18px;
+      text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .drop-zone:hover, .drop-zone.drag-active {
+      border-color: #0d6efd;
+      background: #eff6ff;
+    }
+
+    .badge-bw { background-color: #475569; color: #ffffff; }
+    .badge-color { background-color: #e11d48; color: #ffffff; }
+
+    .custom-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(15, 23, 42, 0.62);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .custom-modal-backdrop.d-none {
+      display: none !important;
+    }
+
+    .selected-file-item {
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      transition: all 0.25s ease;
+    }
+    .selected-file-item:last-child {
+      margin-bottom: 0;
+    }
+    .selected-file-item.done {
+      background: #d1e7dd;
+      border-color: #badbcc;
+    }
+
+    .compact-file-list {
+      max-height: 165px;
+      overflow-y: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px;
+      background: #ffffff;
+    }
+
+    .compact-file-list::-webkit-scrollbar,
+    .modal-file-scroll::-webkit-scrollbar,
+    .queue-files-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .compact-file-list::-webkit-scrollbar-thumb,
+    .modal-file-scroll::-webkit-scrollbar-thumb,
+    .queue-files-scroll::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 6px;
+    }
+
+    .modal-file-scroll {
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .queue-files-scroll {
+      max-height: 220px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .queue-file-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 5px;
+      gap: 6px;
+    }
+    .queue-file-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .custom-progress-container {
+      height: 14px;
+      background-color: #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .custom-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #6ea8fe 0%, #0d6efd 50%, #0a58ca 100%);
+      transition: width 0.35s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#customer">
+        <i class="bi bi-printer-fill fs-4"></i>
+        <span>M.K. PRINT</span>
+      </a>
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-light text-primary fw-semibold btn-sm" id="btnCustomerView" onclick="switchTab('customer')">
+          <i class="bi bi-upload me-1"></i> Customer View
+        </button>
+        <button type="button" class="btn btn-outline-light btn-sm" id="btnPrintQueue" onclick="switchTab('queue')">
+          <i class="bi bi-list-task me-1"></i> Print Queue
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container my-4 flex-grow-1">
+
+    <!-- CUSTOMER VIEW -->
+    <div id="customerSection">
+      <div class="row justify-content-center">
+        <div class="col-lg-7">
+          <div class="card p-4">
+            <h4 class="fw-bold text-primary mb-1">M.K. PRINT</h4>
+            <p class="text-muted small mb-4">Fill out the options below to submit your files directly to our printing machine.</p>
+
+            <!-- Custom Status Alert Box -->
+            <div id="formAlert" class="alert d-none mb-3" role="alert"></div>
+
+            <form id="printForm" onsubmit="handleFormSubmit(event)">
+              <div class="mb-3">
+                <label class="form-label fw-semibold" for="custName">Customer Name / File Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="custName" placeholder="Enter your full name / File Name" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold" for="fileInput">Select Files (Multiple Allowed) <span class="text-danger">*</span></label>
+
+                <div class="d-flex gap-2 mb-2">
+                  <button type="button" class="btn btn-outline-primary btn-sm flex-fill fw-semibold" onclick="openPortraitCameraModal()">
+                    <i class="bi bi-camera-fill me-1"></i> HD Portrait Camera
+                  </button>
+                  <button type="button" class="btn btn-outline-success btn-sm flex-fill fw-semibold" onclick="openGalleryPicker()">
+                    <i class="bi bi-images me-1"></i> Gallery
+                  </button>
+                </div>
+
+                <!-- Hidden Gallery Input (images with multiple) -->
+                <input type="file" id="galleryInput" class="d-none" accept="image/*" multiple onchange="handleGallerySelect(event)">
+
+                <!-- Drag & Drop / Click Drop Zone + Hidden General File Input -->
+                <label for="fileInput" class="drop-zone d-block" id="dropZone">
+                  <i class="bi bi-cloud-arrow-up fs-1 text-primary"></i>
+                  <p class="mb-1 fw-semibold text-dark">Click or Drag &amp; Drop Files Here</p>
+                  <p class="text-muted small mb-0">PDF, Images, Documents (Add as many files as you want)</p>
+                </label>
+                <input type="file" id="fileInput" class="d-none" accept=".pdf,image/*,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv" multiple onchange="handleFileSelect(event)">
+
+                <!-- Selected Files Count and List -->
+                <div id="fileInfo" class="mt-3 d-none">
+                  <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-1">
+                    <span class="text-success fw-bold small">
+                      <i class="bi bi-file-earmark-check me-1"></i> <span id="fileNameDisplay">0 file(s) selected (0 KB)</span>
+                    </span>
+                    <div class="d-flex align-items-center gap-1">
+                      <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" style="font-size: 12px;" onclick="openFilesPopup()">
+                        <i class="bi bi-arrows-fullscreen me-1"></i>View All (<span id="popupCountBadge">0</span>)
+                      </button>
+                      <button type="button" class="btn btn-outline-danger btn-sm py-0 px-2" style="font-size: 12px;" id="clearAllBtn" onclick="clearAllSelectedFiles()">Clear All</button>
+                    </div>
+                  </div>
+
+                  <div id="fileListContainer" class="compact-file-list"></div>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="colorMode">Color Mode</label>
+                  <select class="form-select" id="colorMode">
+                    <option value="B&W">B&amp;W</option>
+                    <option value="Color">Color</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="numCopies">Copies</label>
+                  <input type="number" class="form-control" id="numCopies" value="1" min="1" max="100">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="paperSize">Paper Size</label>
+                  <select class="form-select" id="paperSize">
+                    <option value="A4">A4</option>
+                    <option value="A3">A3</option>
+                    <option value="Legal">Legal</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold" for="printSides">Print Sides</label>
+                  <select class="form-select" id="printSides">
+                    <option value="Single-Sided">Single-Sided</option>
+                    <option value="Double-Sided">Double-Sided</option>
+                  </select>
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label fw-semibold" for="paperType">Paper Quality</label>
+                  <select class="form-select" id="paperType">
+                    <option value="Plain Sheet">Plain Sheet</option>
+                    <option value="Glossy Sheet">Glossy Sheet</option>
+                  </select>
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label fw-semibold" for="custNote">Special Note / Instructions <span class="text-muted fw-normal">(Optional)</span></label>
+                  <input type="text" class="form-control" id="custNote" placeholder="e.g. Spiral binding needed, Page 1 to 5 only, etc.">
+                </div>
+              </div>
+
+              <!-- Dynamic Upload Progress Section -->
+              <div id="progressSection" class="d-none mt-2 mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="small fw-bold text-primary" id="progressStatusText">Preparing upload...</span>
+                  <span class="small text-muted fw-semibold" id="progressPercentText">0%</span>
+                </div>
+                <div class="custom-progress-container">
+                  <div id="progressBar" class="custom-progress-bar"></div>
+                </div>
+              </div>
+
+              <button type="submit" id="submitBtn" class="btn btn-primary w-100 py-2 fw-bold text-uppercase mt-2">
+                <i class="bi bi-send-fill me-1"></i> Send Files for Printing
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRINT QUEUE (ADMIN VIEW) -->
+    <div id="queueSection" class="d-none">
+      <div id="pinScreen" class="row justify-content-center my-5">
+        <div class="col-md-4">
+          <div class="card p-4 text-center">
+            <i class="bi bi-shield-lock-fill text-primary fs-1 mb-2"></i>
+            <h5 class="fw-bold mb-1">Print Queue Locked</h5>
+            <p class="text-muted small mb-3">Enter Admin PIN to view print orders</p>
+            <input type="password" id="pinInput" class="form-control text-center fs-4 mb-3" placeholder="****" maxlength="8" onkeydown="if(event.key==='Enter') verifyPin()">
+            <button type="button" id="unlockBtn" class="btn btn-primary w-100 fw-bold" onclick="verifyPin()">Unlock Queue</button>
+            <div id="pinError" class="text-danger small mt-2 d-none">Incorrect PIN!</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="queueContent" class="d-none">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <div>
+            <h4 class="fw-bold mb-0">Print Queue</h4>
+            <p class="text-muted small mb-0">Live orders synced with IST (Indian Standard Time)</p>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="fetchOrders()"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" onclick="clearQueue()">Clear Queue List</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="lockQueue()">Lock Queue</button>
+          </div>
+        </div>
+        <div id="queueList" class="row g-3"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Confirm Modal -->
+  <div id="confirmModalOverlay" class="d-none custom-modal-backdrop" style="z-index: 1055;" onclick="if(event.target === this) closeConfirmModal(false)">
+    <div class="card p-4 shadow-lg mx-3" style="max-width: 400px; width: 100%;">
+      <h5 class="fw-bold text-danger mb-2"><i class="bi bi-exclamation-triangle-fill me-1"></i> Confirm Action</h5>
+      <p id="confirmModalText" class="text-muted small mb-4">Clear queue list? (Files in Google Drive will remain saved)</p>
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary btn-sm px-3" onclick="closeConfirmModal(false)">Cancel</button>
+        <button type="button" class="btn btn-danger btn-sm px-3 fw-semibold" onclick="closeConfirmModal(true)">Yes, Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notice Modal -->
+  <div id="noticeModalOverlay" class="d-none custom-modal-backdrop" style="z-index: 1060;" onclick="if(event.target === this) closeNoticeModal()">
+    <div class="card p-4 shadow-lg mx-3" style="max-width: 400px; width: 100%;">
+      <h5 class="fw-bold text-primary mb-2"><i class="bi bi-info-circle-fill me-1"></i> Notice</h5>
+      <p id="noticeModalText" class="text-muted small mb-4"></p>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary btn-sm px-4 fw-semibold" onclick="closeNoticeModal()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected Files Popup Modal -->
+  <div id="filesListModal" class="d-none custom-modal-backdrop" style="z-index: 1050;" onclick="if(event.target === this) closeFilesPopup()">
+    <div class="card shadow-lg mx-3 overflow-hidden" style="max-width: 560px; width: 100%;">
+      <div class="bg-primary text-white px-4 py-3 d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="fw-bold mb-0"><i class="bi bi-files me-1"></i> Selected Files (<span id="modalTotalFilesCount">0</span>)</h6>
+          <small style="opacity: 0.85;" id="modalTotalSizeText">Total Size: 0 KB</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" onclick="closeFilesPopup()"></button>
+      </div>
+      <div class="p-3 bg-light">
+        <div id="modalFileListContainer" class="modal-file-scroll"></div>
+      </div>
+      <div class="px-4 py-2 bg-white border-top d-flex justify-content-between align-items-center">
+        <button type="button" class="btn btn-outline-danger btn-sm" id="modalClearAllBtn" onclick="clearAllSelectedFiles()">
+          <i class="bi bi-trash me-1"></i> Clear All
+        </button>
+        <button type="button" class="btn btn-primary btn-sm px-4 fw-semibold" onclick="closeFilesPopup()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Files View All Modal (Admin Print Queue) -->
+  <div id="orderFilesModal" class="d-none custom-modal-backdrop" style="z-index: 1052;" onclick="if(event.target === this) closeOrderFilesPopup()">
+    <div class="card shadow-lg mx-3 overflow-hidden" style="max-width: 620px; width: 100%;">
+      <div class="bg-primary text-white px-4 py-3 d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="fw-bold mb-0"><i class="bi bi-folder2-open me-1"></i> <span id="orderModalTitle">Order Files</span></h6>
+          <small style="opacity: 0.85;" id="orderModalSubtitle">0 Files</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" onclick="closeOrderFilesPopup()"></button>
+      </div>
+      <div class="p-3 bg-light">
+        <div id="orderModalFileListContainer" class="modal-file-scroll"></div>
+      </div>
+      <div class="px-4 py-2 bg-white border-top d-flex justify-content-between align-items-center">
+        <button type="button" class="btn btn-primary btn-sm fw-semibold" id="orderModalZipBtn">
+          <i class="bi bi-file-earmark-zip-fill me-1"></i> Download All as ZIP
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm px-4 fw-semibold" onclick="closeOrderFilesPopup()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HD Portrait Camera Modal (Torch + Capture + Gallery; no switch camera button) -->
+  <div id="portraitCameraModal" class="d-none custom-modal-backdrop" style="z-index: 1058;" onclick="if(event.target === this) closePortraitCameraModal()">
+    <div class="card shadow-lg mx-3 overflow-hidden bg-dark text-white" style="max-width: 430px; width: 100%;">
+      <div class="px-3 py-2 d-flex justify-content-between align-items-center border-bottom border-secondary">
+        <span class="fw-bold small"><i class="bi bi-camera-fill text-primary me-1"></i> HD Portrait Camera</span>
+        <button type="button" class="btn-close btn-close-white" aria-label="Close" onclick="closePortraitCameraModal()"></button>
+      </div>
+      <div class="position-relative bg-black d-flex align-items-center justify-content-center" style="aspect-ratio: 3 / 4; max-height: 62vh; overflow: hidden;">
+        <video id="portraitCameraVideo" autoplay playsinline muted class="w-100 h-100" style="object-fit: cover;"></video>
+        <canvas id="portraitCameraCanvas" class="d-none"></canvas>
+        <div id="cameraStatusBadge" class="position-absolute top-0 start-0 m-2 badge bg-dark text-white d-none" style="font-size: 11px;"></div>
+      </div>
+      <div class="p-3 d-flex align-items-center justify-content-between gap-2 bg-dark">
+        <button type="button" id="torchToggleBtn" class="btn btn-outline-warning btn-sm fw-semibold" onclick="toggleCameraTorch()">
+          <i class="bi bi-flashlight-off me-1"></i> Torch
+        </button>
+        <button type="button" id="capturePhotoBtn" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 54px; height: 54px;" onclick="capturePortraitPhoto()" title="Capture Photo">
+          <i class="bi bi-camera-fill fs-5"></i>
+        </button>
+        <button type="button" class="btn btn-outline-success btn-sm fw-semibold" onclick="openGalleryPicker()">
+          <i class="bi bi-images me-1"></i> Gallery
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRO0bbbm5yhNtYFBBO5ctzyKe-TsTFDBGptjl-k849m7iIuzPGpZ5mRmOsxH5uDGQY/exec";
+    const ORDER_STORAGE_KEY = "mk_print_last_order_no";
+    const ORDER_DATE_STORAGE_KEY = "mk_print_last_order_date";
+    const UPLOAD_BATCH_MAX_FILES = 5;
+    const UPLOAD_BATCH_MAX_BYTES = 4 * 1024 * 1024; // ~4 MB per batch
+    const UPLOAD_REQUEST_TIMEOUT_MS = 90000;
+    const UPLOAD_MAX_RETRIES = 3;
+    const ORDER_MERGE_WINDOW_MINUTES = 20;
+
+    let orders = [];
+    let selectedFiles = [];
+    let fileUploadStatuses = [];
+    let cameraImgCounter = 0;
+    let sessionPin = "";
+    let confirmCallback = null;
+    let currentOrderModalIndex = null;
+    let cameraStream = null;
+    let cameraTrack = null;
+    let torchEnabled = false;
+    let cameraFeedbackTimer = null;
+    let alertDismissTimer = null;
+    const memoryStorage = {};
+
+    // Sandbox-safe storage helpers
+    function safeStorageGet(key) {
+      try {
+        return window.localStorage.getItem(key);
+      } catch (e) {
+        return Object.prototype.hasOwnProperty.call(memoryStorage, key) ? memoryStorage[key] : null;
+      }
+    }
+
+    function safeStorageSet(key, val) {
+      memoryStorage[key] = String(val);
+      try {
+        window.localStorage.setItem(key, String(val));
+      } catch (e) {
+        // Fallback already stored in memoryStorage
+      }
+    }
+
+    function safeScrollTop() {
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (e) {
+        try {
+          window.scrollTo(0, 0);
+        } catch (err) {
+          // Ignore scroll restriction in embedded WebView
+        }
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function showNoticeModal(msg) {
+      const overlay = document.getElementById('noticeModalOverlay');
+      const textEl = document.getElementById('noticeModalText');
+      if (overlay && textEl) {
+        textEl.textContent = msg;
+        overlay.classList.remove('d-none');
+      }
+    }
+
+    function closeNoticeModal() {
+      const overlay = document.getElementById('noticeModalOverlay');
+      if (overlay) {
+        overlay.classList.add('d-none');
+      }
+    }
+
+    function openConfirmModal(msg, onConfirm) {
+      const overlay = document.getElementById('confirmModalOverlay');
+      const textEl = document.getElementById('confirmModalText');
+      if (overlay && textEl) {
+        textEl.textContent = msg;
+        confirmCallback = typeof onConfirm === 'function' ? onConfirm : null;
+        overlay.classList.remove('d-none');
+      }
+    }
+
+    function closeConfirmModal(accepted) {
+      const overlay = document.getElementById('confirmModalOverlay');
+      if (overlay) {
+        overlay.classList.add('d-none');
+      }
+      const cb = confirmCallback;
+      confirmCallback = null;
+      if (accepted && cb) {
+        cb();
+      }
+    }
+
+    function padImgNumber(num) {
+      const parsed = parseInt(num, 10) || 1;
+      return parsed < 10 ? '0' + parsed : String(parsed);
+    }
+
+    function getNextCameraImgNumber() {
+      let maxExisting = 0;
+      selectedFiles.forEach((f) => {
+        if (f && f._isCameraImg) {
+          const match = String(f.name || '').match(/^IMG_(\d+)\.jpg$/i);
+          if (match) {
+            const parsed = parseInt(match[1], 10);
+            if (parsed > maxExisting) maxExisting = parsed;
+          }
+        }
+      });
+      cameraImgCounter = Math.max(cameraImgCounter, maxExisting) + 1;
+      return cameraImgCounter;
+    }
+
+    function buildNextCameraImgName() {
+      const nextNum = getNextCameraImgNumber();
+      return `IMG_${padImgNumber(nextNum)}.jpg`;
+    }
+
+    function resequenceCameraImgFiles() {
+      let seq = 0;
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const f = selectedFiles[i];
+        if (f && f._isCameraImg) {
+          seq += 1;
+          const nextName = `IMG_${padImgNumber(seq)}.jpg`;
+          if (f.name !== nextName) {
+            try {
+              const renamedFile = new File([f], nextName, {
+                type: f.type || 'image/jpeg',
+                lastModified: f.lastModified || Date.now()
+              });
+              renamedFile._isCameraImg = true;
+              selectedFiles[i] = renamedFile;
+            } catch (e) {
+              try { f.name = nextName; } catch (err) {}
+            }
+          }
+        }
+      }
+      cameraImgCounter = seq;
+    }
+
+    function formatOrderNumber(num) {
+      const parsed = parseInt(String(num || "").replace(/\D/g, ""), 10);
+      if (!parsed || parsed < 1) return "01";
+      return parsed < 10 ? "0" + parsed : String(parsed);
+    }
+
+    function persistLastOrderNo(todayDateStr, orderNum) {
+      const parsed = parseInt(String(orderNum || "0").replace(/\D/g, ""), 10);
+      if (Number.isFinite(parsed) && parsed > 0) {
+        safeStorageSet(ORDER_DATE_STORAGE_KEY, todayDateStr);
+        safeStorageSet(ORDER_STORAGE_KEY, String(parsed));
+      }
+    }
+
+    function parseISTDateAndMinutes(ord) {
+      const formatted = formatOrderDateTimeIST(ord);
+      const match = formatted.match(/^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+      if (!match) {
+        return { dateStr: '', totalMinutes: NaN };
+      }
+      const dateStr = `${match[1]}/${match[2]}/${match[3]}`;
+      let hour = parseInt(match[4], 10);
+      const minute = parseInt(match[5], 10);
+      const period = match[6].toUpperCase();
+      if (period === 'PM' && hour !== 12) hour += 12;
+      if (period === 'AM' && hour === 12) hour = 0;
+      return {
+        dateStr,
+        totalMinutes: (hour * 60) + minute
+      };
+    }
+
+    function buildOrderSignature(ord) {
+      const norm = (val) => String(val || '').trim().toLowerCase();
+      return [
+        norm(ord.name),
+        norm(ord.color),
+        norm(ord.copies),
+        norm(ord.size),
+        norm(ord.sides),
+        norm(ord.paperType),
+        norm(ord.note || 'None')
+      ].join('|');
+    }
+
+    function getFileDedupeKey(f, fallbackIdx) {
+      if (!f) return `empty:${fallbackIdx}`;
+      if (f.fileId) return `id:${String(f.fileId).trim()}`;
+      const urlPart = String(f.fileUrl || '').trim();
+      const namePart = String(f.fileName || '').trim().toLowerCase();
+      if (urlPart || namePart) {
+        return `un:${urlPart}|${namePart}`;
+      }
+      return `idx:${f.fileIndex || fallbackIdx}`;
+    }
+
+    function appendUniqueFilesToEntry(targetEntry, incomingFiles) {
+      const list = Array.isArray(incomingFiles) ? incomingFiles : [];
+      list.forEach((f, i) => {
+        if (!f) return;
+        const fKey = getFileDedupeKey(f, targetEntry.files.length + i);
+        if (!targetEntry._seenFileKeys.has(fKey)) {
+          targetEntry._seenFileKeys.add(fKey);
+          targetEntry.files.push(f);
+        }
+      });
+    }
+
+    function mergeOrderBatches(rawOrders) {
+      const list = Array.isArray(rawOrders) ? rawOrders : [];
+      const uploadIdMap = new Map();
+      const mergedEntries = [];
+
+      list.forEach((ord) => {
+        if (!ord || typeof ord !== 'object') return;
+        const rawUploadId = String(ord.uploadId || '').trim();
+        const hasValidUploadId = rawUploadId &&
+          rawUploadId.toLowerCase() !== 'undefined' &&
+          rawUploadId.toLowerCase() !== 'null';
+
+        const parsedTime = parseISTDateAndMinutes(ord);
+        const signature = buildOrderSignature(ord);
+        let matchedEntry = null;
+
+        if (hasValidUploadId && uploadIdMap.has(rawUploadId)) {
+          matchedEntry = uploadIdMap.get(rawUploadId);
+        }
+
+        if (!matchedEntry) {
+          for (let i = mergedEntries.length - 1; i >= 0; i--) {
+            const candidate = mergedEntries[i];
+            if (candidate._signature !== signature) continue;
+            if (!parsedTime.dateStr || candidate._dateStr !== parsedTime.dateStr) continue;
+            if (Number.isNaN(parsedTime.totalMinutes) || Number.isNaN(candidate._lastMinutes)) continue;
+
+            const diffMins = Math.abs(candidate._lastMinutes - parsedTime.totalMinutes);
+            if (diffMins <= ORDER_MERGE_WINDOW_MINUTES) {
+              matchedEntry = candidate;
+              break;
+            }
+          }
+        }
+
+        if (matchedEntry) {
+          appendUniqueFilesToEntry(matchedEntry, ord.files);
+
+          if (!Number.isNaN(parsedTime.totalMinutes)) {
+            if (Number.isNaN(matchedEntry._firstMinutes) || parsedTime.totalMinutes < matchedEntry._firstMinutes) {
+              matchedEntry._firstMinutes = parsedTime.totalMinutes;
+              matchedEntry.submissionTime = ord.submissionTime || matchedEntry.submissionTime;
+              matchedEntry.time = ord.time || matchedEntry.time;
+            }
+            if (Number.isNaN(matchedEntry._lastMinutes) || parsedTime.totalMinutes > matchedEntry._lastMinutes) {
+              matchedEntry._lastMinutes = parsedTime.totalMinutes;
+            }
+          }
+
+          if (hasValidUploadId && !uploadIdMap.has(rawUploadId)) {
+            uploadIdMap.set(rawUploadId, matchedEntry);
+          }
+        } else {
+          const seenKeys = new Set();
+          const entry = {
+            ...ord,
+            files: [],
+            _seenFileKeys: seenKeys,
+            _signature: signature,
+            _dateStr: parsedTime.dateStr,
+            _firstMinutes: parsedTime.totalMinutes,
+            _lastMinutes: parsedTime.totalMinutes
+          };
+          appendUniqueFilesToEntry(entry, ord.files);
+          if (hasValidUploadId) {
+            uploadIdMap.set(rawUploadId, entry);
+          }
+          mergedEntries.push(entry);
+        }
+      });
+
+      mergedEntries.forEach((entry) => {
+        if (entry.files.some(f => typeof f.fileIndex === 'number')) {
+          entry.files.sort((a, b) => (Number(a.fileIndex) || 0) - (Number(b.fileIndex) || 0));
+        }
+      });
+
+      return mergedEntries.map(({
+        _seenFileKeys,
+        _signature,
+        _dateStr,
+        _firstMinutes,
+        _lastMinutes,
+        ...cleanOrder
+      }) => cleanOrder);
+    }
+
+    function syncOrdersSequence(rawOrders, todayDateStr) {
+      const list = mergeOrderBatches(rawOrders);
+      const total = list.length;
+
+      const computed = list.map((ord, idx) => {
+        const seqNum = Math.max(1, total - idx);
+        return {
+          ...ord,
+          orderNo: formatOrderNumber(seqNum)
+        };
+      });
+
+      if (total > 0) {
+        persistLastOrderNo(todayDateStr, total);
+      }
+
+      return computed;
+    }
+
+    function switchTab(tab) {
+      const customerSec = document.getElementById('customerSection');
+      const queueSec = document.getElementById('queueSection');
+      const btnCust = document.getElementById('btnCustomerView');
+      const btnQueue = document.getElementById('btnPrintQueue');
+
+      if (tab === 'customer') {
+        closePortraitCameraModal();
+        if (customerSec) customerSec.classList.remove('d-none');
+        if (queueSec) queueSec.classList.add('d-none');
+        if (btnCust) btnCust.className = 'btn btn-light text-primary fw-semibold btn-sm';
+        if (btnQueue) btnQueue.className = 'btn btn-outline-light btn-sm';
+      } else {
+        closePortraitCameraModal();
+        if (customerSec) customerSec.classList.add('d-none');
+        if (queueSec) queueSec.classList.remove('d-none');
+        if (btnCust) btnCust.className = 'btn btn-outline-light btn-sm';
+        if (btnQueue) btnQueue.className = 'btn btn-light text-primary fw-semibold btn-sm';
+
+        if (sessionPin) {
+          fetchOrders();
+        } else {
+          const pinScreen = document.getElementById('pinScreen');
+          const queueContent = document.getElementById('queueContent');
+          if (pinScreen) pinScreen.classList.remove('d-none');
+          if (queueContent) queueContent.classList.add('d-none');
+        }
+      }
+    }
+
+    async function verifyPin() {
+      const pinInput = document.getElementById('pinInput');
+      const enteredPin = pinInput ? pinInput.value.trim() : '';
+      if (!enteredPin) return;
+
+      const btn = document.getElementById('unlockBtn');
+      const errBox = document.getElementById('pinError');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Verifying...";
+      }
+      if (errBox) errBox.classList.add('d-none');
+
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=getOrders&pin=${encodeURIComponent(enteredPin)}`, {
+          method: 'GET',
+          redirect: 'follow'
+        });
+
+        const rawText = await res.text();
+        let data;
+        try {
+          data = JSON.parse(rawText);
+        } catch (parseErr) {
+          throw new Error("Invalid server response. Please check Apps Script deployment.");
+        }
+
+        if (data.status === 'unauthorized') {
+          if (errBox) {
+            errBox.textContent = data.message || "Incorrect PIN!";
+            errBox.classList.remove('d-none');
+          }
+        } else if (data.status === 'success' || Array.isArray(data)) {
+          sessionPin = enteredPin;
+          const istNow = getIndianDateTime();
+          const rawList = Array.isArray(data) ? data : (data.orders || []);
+          orders = syncOrdersSequence(rawList, istNow.dateOnly);
+          const pinScreen = document.getElementById('pinScreen');
+          const queueContent = document.getElementById('queueContent');
+          if (pinScreen) pinScreen.classList.add('d-none');
+          if (queueContent) queueContent.classList.remove('d-none');
+          if (pinInput) pinInput.value = '';
+          renderQueue();
+        } else {
+          if (errBox) {
+            errBox.textContent = data.message || "Unable to unlock queue.";
+            errBox.classList.remove('d-none');
+          }
+        }
+      } catch (err) {
+        if (errBox) {
+          errBox.textContent = (err && err.message) ? err.message : "Server error. Check connection.";
+          errBox.classList.remove('d-none');
+        }
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "Unlock Queue";
+        }
+      }
+    }
+
+    function lockQueue() {
+      sessionPin = "";
+      orders = [];
+      const queueList = document.getElementById('queueList');
+      const pinScreen = document.getElementById('pinScreen');
+      const queueContent = document.getElementById('queueContent');
+      if (queueList) queueList.innerHTML = "";
+      if (pinScreen) pinScreen.classList.remove('d-none');
+      if (queueContent) queueContent.classList.add('d-none');
+    }
+
+    // Initialize drag-and-drop and UI state safely
+    document.addEventListener('DOMContentLoaded', () => {
+      updateFileListUI();
+      const dropZone = document.getElementById('dropZone');
+      if (!dropZone) return;
+
+      ['dragenter', 'dragover'].forEach(evtName => {
+        dropZone.addEventListener(evtName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.classList.add('drag-active');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(evtName => {
+        dropZone.addEventListener(evtName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropZone.classList.remove('drag-active');
+        });
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        if (e && e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          addFiles(e.dataTransfer.files);
+        }
+      });
+    });
+
+    function addFiles(fileList) {
+      const newFiles = Array.from(fileList || []);
+      if (newFiles.length > 0) {
+        newFiles.forEach(file => {
+          const isDuplicate = selectedFiles.some(f => f.name === file.name && f.size === file.size);
+          if (!isDuplicate) {
+            selectedFiles.push(file);
+            fileUploadStatuses.push('Pending');
+          }
+        });
+        updateFileListUI();
+      }
+    }
+
+    function handleFileSelect(e) {
+      if (e && e.target && e.target.files) {
+        addFiles(e.target.files);
+        e.target.value = '';
+      }
+    }
+
+    function openGalleryPicker() {
+      const galleryInput = document.getElementById('galleryInput');
+      if (galleryInput) {
+        galleryInput.value = '';
+        galleryInput.click();
+      }
+    }
+
+    function handleGallerySelect(e) {
+      if (e && e.target && e.target.files && e.target.files.length > 0) {
+        addFiles(e.target.files);
+        e.target.value = '';
+        closePortraitCameraModal();
+      }
+    }
+
+    function removeSingleFile(index) {
+      if (index < 0 || index >= selectedFiles.length) return;
+      const removedFile = selectedFiles[index];
+      selectedFiles.splice(index, 1);
+      fileUploadStatuses.splice(index, 1);
+      if (removedFile && removedFile._isCameraImg) {
+        resequenceCameraImgFiles();
+      }
+      updateFileListUI();
+      if (selectedFiles.length === 0) {
+        closeFilesPopup();
+      }
+    }
+
+    function clearAllSelectedFiles() {
+      selectedFiles = [];
+      fileUploadStatuses = [];
+      cameraImgCounter = 0;
+      const fileInput = document.getElementById('fileInput');
+      const galleryInput = document.getElementById('galleryInput');
+      if (fileInput) fileInput.value = '';
+      if (galleryInput) galleryInput.value = '';
+      updateFileListUI();
+      closeFilesPopup();
+    }
+
+    function openFilesPopup() {
+      const modal = document.getElementById('filesListModal');
+      if (modal) {
+        updateFileListUI();
+        modal.classList.remove('d-none');
+      }
+    }
+
+    function closeFilesPopup() {
+      const modal = document.getElementById('filesListModal');
+      if (modal) {
+        modal.classList.add('d-none');
+      }
+    }
+
+    function showCameraFeedback(msg, badgeClasses) {
+      const badge = document.getElementById('cameraStatusBadge');
+      if (!badge) return;
+      if (cameraFeedbackTimer) {
+        clearTimeout(cameraFeedbackTimer);
+        cameraFeedbackTimer = null;
+      }
+      badge.className = `position-absolute top-0 start-0 m-2 badge ${badgeClasses || 'bg-dark text-white'}`;
+      badge.style.fontSize = '11px';
+      badge.textContent = msg;
+      badge.classList.remove('d-none');
+      cameraFeedbackTimer = setTimeout(() => {
+        badge.classList.add('d-none');
+      }, 2500);
+    }
+
+    function updateTorchButtonUI() {
+      const btn = document.getElementById('torchToggleBtn');
+      if (!btn) return;
+      if (torchEnabled) {
+        btn.className = 'btn btn-warning text-dark btn-sm fw-semibold';
+        btn.innerHTML = `<i class="bi bi-flashlight-fill me-1"></i> Torch On`;
+      } else {
+        btn.className = 'btn btn-outline-warning btn-sm fw-semibold';
+        btn.innerHTML = `<i class="bi bi-flashlight-off me-1"></i> Torch`;
+      }
+    }
+
+    async function setTorchState(enable) {
+      if (!cameraTrack || typeof cameraTrack.applyConstraints !== 'function') {
+        return false;
+      }
+      try {
+        await cameraTrack.applyConstraints({
+          advanced: [{ torch: Boolean(enable) }]
+        });
+        torchEnabled = Boolean(enable);
+        updateTorchButtonUI();
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    async function toggleCameraTorch() {
+      if (!cameraTrack) {
+        showCameraFeedback("Camera not active", "bg-secondary text-white");
+        return;
+      }
+      let supportsTorch = false;
+      try {
+        if (typeof cameraTrack.getCapabilities === 'function') {
+          const caps = cameraTrack.getCapabilities();
+          supportsTorch = Boolean(caps && caps.torch);
+        }
+      } catch (e) {
+        supportsTorch = false;
+      }
+
+      if (!supportsTorch) {
+        showCameraFeedback("Torch not supported on this device", "bg-secondary text-white");
+        return;
+      }
+
+      const nextState = !torchEnabled;
+      const ok = await setTorchState(nextState);
+      if (ok) {
+        showCameraFeedback(nextState ? "Torch ON" : "Torch OFF", "bg-warning text-dark");
+      } else {
+        showCameraFeedback("Unable to toggle torch", "bg-danger text-white");
+      }
+    }
+
+    function stopCameraStream() {
+      if (cameraTrack && torchEnabled) {
+        try {
+          const p = cameraTrack.applyConstraints({ advanced: [{ torch: false }] });
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        } catch (e) {}
+      }
+      torchEnabled = false;
+      updateTorchButtonUI();
+
+      if (cameraStream && typeof cameraStream.getTracks === 'function') {
+        try {
+          cameraStream.getTracks().forEach((track) => {
+            try { track.stop(); } catch (e) {}
+          });
+        } catch (e) {}
+      }
+      cameraStream = null;
+      cameraTrack = null;
+
+      const video = document.getElementById('portraitCameraVideo');
+      if (video) {
+        try { video.srcObject = null; } catch (e) {}
+      }
+    }
+
+    async function openPortraitCameraModal() {
+      const modal = document.getElementById('portraitCameraModal');
+      const video = document.getElementById('portraitCameraVideo');
+      if (!modal || !video) return;
+
+      modal.classList.remove('d-none');
+      torchEnabled = false;
+      updateTorchButtonUI();
+      showCameraFeedback("Starting HD Portrait Camera...", "bg-primary text-white");
+
+      if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== 'function') {
+        showCameraFeedback("Camera unavailable in this view — use Gallery", "bg-secondary text-white");
+        return;
+      }
+
+      stopCameraStream();
+
+      const constraintCandidates = [
+        {
+          audio: false,
+          video: {
+            facingMode: { ideal: 'environment' },
+            width: { ideal: 1080 },
+            height: { ideal: 1920 },
+            aspectRatio: { ideal: 0.5625 }
+          }
+        },
+        {
+          audio: false,
+          video: {
+            facingMode: { ideal: 'environment' },
+            width: { ideal: 720 },
+            height: { ideal: 1280 }
+          }
+        },
+        {
+          audio: false,
+          video: {
+            facingMode: 'environment'
+          }
+        },
+        {
+          audio: false,
+          video: true
+        }
+      ];
+
+      let acquiredStream = null;
+      for (let i = 0; i < constraintCandidates.length; i++) {
+        try {
+          acquiredStream = await navigator.mediaDevices.getUserMedia(constraintCandidates[i]);
+          if (acquiredStream) break;
+        } catch (err) {
+          acquiredStream = null;
+        }
+      }
+
+      if (!acquiredStream) {
+        showCameraFeedback("Camera permission denied or unavailable — use Gallery", "bg-danger text-white");
+        return;
+      }
+
+      cameraStream = acquiredStream;
+      try {
+        const tracks = acquiredStream.getVideoTracks ? acquiredStream.getVideoTracks() : [];
+        cameraTrack = tracks.length > 0 ? tracks[0] : null;
+      } catch (e) {
+        cameraTrack = null;
+      }
+
+      try {
+        video.srcObject = acquiredStream;
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(() => {});
+        }
+      } catch (e) {}
+
+      const badge = document.getElementById('cameraStatusBadge');
+      if (badge) badge.classList.add('d-none');
+    }
+
+    function closePortraitCameraModal() {
+      stopCameraStream();
+      const modal = document.getElementById('portraitCameraModal');
+      if (modal) {
+        modal.classList.add('d-none');
+      }
+    }
+
+    function capturePortraitPhoto() {
+      const video = document.getElementById('portraitCameraVideo');
+      const canvas = document.getElementById('portraitCameraCanvas');
+      if (!video || !canvas || !cameraStream) {
+        showCameraFeedback("Camera not active — use Gallery", "bg-secondary text-white");
+        return;
+      }
+
+      try {
+        const vw = video.videoWidth || 720;
+        const vh = video.videoHeight || 1280;
+        if (!vw || !vh) {
+          showCameraFeedback("Loading camera frame...", "bg-warning text-dark");
+          return;
+        }
+
+        const targetAspect = 3 / 4;
+        let cropW = vw;
+        let cropH = vh;
+        let sx = 0;
+        let sy = 0;
+
+        if (vw / vh > targetAspect) {
+          cropW = Math.round(vh * targetAspect);
+          sx = Math.max(0, Math.round((vw - cropW) / 2));
+        } else if (vh / vw < 4 / 3) {
+          cropH = Math.round(vw / targetAspect);
+          sy = Math.max(0, Math.round((vh - cropH) / 2));
+        }
+
+        const outW = Math.min(1080, cropW);
+        const outH = Math.round(outW / targetAspect);
+        canvas.width = outW;
+        canvas.height = outH;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          showCameraFeedback("Canvas unavailable", "bg-danger text-white");
+          return;
+        }
+
+        ctx.drawImage(video, sx, sy, cropW, cropH, 0, 0, outW, outH);
+
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            showCameraFeedback("Capture failed", "bg-danger text-white");
+            return;
+          }
+          const fileName = buildNextCameraImgName();
+          const photoFile = new File([blob], fileName, {
+            type: 'image/jpeg',
+            lastModified: Date.now()
+          });
+          photoFile._isCameraImg = true;
+          addFiles([photoFile]);
+          resequenceCameraImgFiles();
+          updateFileListUI();
+          showCameraFeedback(`Saved ${fileName}`, "bg-success text-white");
+        }, 'image/jpeg', 0.92);
+      } catch (err) {
+        showCameraFeedback("Unable to capture photo", "bg-danger text-white");
+      }
+    }
+
+    function formatFileSize(bytes) {
+      if (typeof bytes !== 'number' || isNaN(bytes) || bytes <= 0) return '0 KB';
+      if (bytes < 1024 * 1024) {
+        return `${(bytes / 1024).toFixed(1)} KB`;
+      }
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    }
+
+    function renderFileItemRow(file, idx, prefix) {
+      const status = fileUploadStatuses[idx] || 'Pending';
+      const isDone = status === 'Sent';
+      const isSending = status === 'Sending';
+      const isFailed = status === 'Failed';
+      let badgeClass = 'bg-secondary text-white';
+      let badgeHtml = 'Pending';
+
+      if (isDone) {
+        badgeClass = 'bg-success text-white';
+        badgeHtml = `<i class="bi bi-check-lg me-1"></i> Sent`;
+      } else if (isSending) {
+        badgeClass = 'bg-primary text-white';
+        badgeHtml = `Sending...`;
+      } else if (isFailed) {
+        badgeClass = 'bg-danger text-white';
+        badgeHtml = `Failed`;
+      }
+
+      return `
+        <div class="selected-file-item ${isDone ? 'done' : ''}" id="${prefix}-file-item-${idx}">
+          <span class="text-truncate me-2" style="max-width: 72%;" title="${escapeHtml(file.name)} (${formatFileSize(file.size)})">
+            <span class="text-muted fw-semibold me-1">${idx + 1}.</span>
+            <i class="bi bi-file-earmark-text text-primary me-1"></i> ${escapeHtml(file.name)}
+            <span class="text-muted small ms-1">(${formatFileSize(file.size)})</span>
+          </span>
+          <div class="d-flex align-items-center gap-2">
+            <span id="${prefix}-file-status-${idx}" class="badge ${badgeClass}" style="font-size: 10px;">${badgeHtml}</span>
+            <button type="button" class="btn-close file-remove-btn" style="font-size: 10px;" onclick="removeSingleFile(${idx})" aria-label="Remove file" title="Remove file"></button>
+          </div>
+        </div>
+      `;
+    }
+
+    function setFileRowUIStatus(index, status) {
+      fileUploadStatuses[index] = status;
+      const isDone = status === 'Sent';
+      const isSending = status === 'Sending';
+      const isFailed = status === 'Failed';
+
+      ['inline', 'modal'].forEach(prefix => {
+        const fileStatusBadge = document.getElementById(`${prefix}-file-status-${index}`);
+        const fileItemRow = document.getElementById(`${prefix}-file-item-${index}`);
+        if (!fileStatusBadge || !fileItemRow) return;
+
+        fileItemRow.classList.toggle('done', isDone);
+        if (isDone) {
+          fileStatusBadge.className = "badge bg-success text-white";
+          fileStatusBadge.innerHTML = `<i class="bi bi-check-lg me-1"></i> Sent`;
+        } else if (isSending) {
+          fileStatusBadge.className = "badge bg-primary text-white";
+          fileStatusBadge.innerHTML = `Sending...`;
+        } else if (isFailed) {
+          fileStatusBadge.className = "badge bg-danger text-white";
+          fileStatusBadge.innerHTML = `Failed`;
+        } else {
+          fileStatusBadge.className = "badge bg-secondary text-white";
+          fileStatusBadge.innerHTML = `Pending`;
+        }
+      });
+    }
+
+    function updateFileListUI() {
+      const fileInfo = document.getElementById('fileInfo');
+      const fileNameDisplay = document.getElementById('fileNameDisplay');
+      const popupCountBadge = document.getElementById('popupCountBadge');
+      const fileListContainer = document.getElementById('fileListContainer');
+      const modalFileListContainer = document.getElementById('modalFileListContainer');
+      const modalTotalFilesCount = document.getElementById('modalTotalFilesCount');
+      const modalTotalSizeText = document.getElementById('modalTotalSizeText');
+
+      if (!fileInfo || !fileListContainer) return;
+
+      if (selectedFiles.length === 0) {
+        fileInfo.classList.add('d-none');
+        fileListContainer.innerHTML = '';
+        if (modalFileListContainer) modalFileListContainer.innerHTML = '';
+        if (popupCountBadge) popupCountBadge.textContent = '0';
+        return;
+      }
+
+      const totalBytes = selectedFiles.reduce((acc, f) => acc + (f.size || 0), 0);
+      fileInfo.classList.remove('d-none');
+      if (fileNameDisplay) {
+        fileNameDisplay.textContent = `${selectedFiles.length} file(s) selected (${formatFileSize(totalBytes)})`;
+      }
+      if (popupCountBadge) popupCountBadge.textContent = String(selectedFiles.length);
+      if (modalTotalFilesCount) modalTotalFilesCount.textContent = String(selectedFiles.length);
+      if (modalTotalSizeText) modalTotalSizeText.textContent = `Total Size: ${formatFileSize(totalBytes)}`;
+
+      fileListContainer.innerHTML = selectedFiles.map((file, idx) => renderFileItemRow(file, idx, 'inline')).join('');
+      if (modalFileListContainer) {
+        modalFileListContainer.innerHTML = selectedFiles.map((file, idx) => renderFileItemRow(file, idx, 'modal')).join('');
+      }
+    }
+
+    function formatAlertHtml(text) {
+      const raw = String(text || '');
+      const match = raw.match(/^(📄\s*)?Thank you!\s*(.*?)\bName\b(.*?)\bFile Name\b(.*)$/);
+      if (match) {
+        const iconPart = match[1] ? escapeHtml(match[1]) : '';
+        const middlePart = escapeHtml(match[2] || '');
+        const betweenPart = escapeHtml(match[3] || '');
+        const tailPart = escapeHtml(match[4] || '');
+        return `${iconPart}<strong>Thank you!</strong>${middlePart}<strong>Name</strong>${betweenPart}<strong>File Name</strong>${tailPart}`;
+      }
+      return escapeHtml(raw);
+    }
+
+    function showMessage(text, type, persistent = false) {
+      const alertBox = document.getElementById('formAlert');
+      if (!alertBox) return;
+
+      if (alertDismissTimer) {
+        clearTimeout(alertDismissTimer);
+        alertDismissTimer = null;
+      }
+
+      alertBox.className = `alert alert-${type} mb-3 fw-normal d-flex justify-content-between align-items-start gap-2`;
+      alertBox.innerHTML = `
+        <span>${formatAlertHtml(text)}</span>
+        <button type="button" class="btn-close" aria-label="Close" onclick="dismissAlertMessage()"></button>
+      `;
+      alertBox.classList.remove('d-none');
+      safeScrollTop();
+
+      if (!persistent) {
+        alertDismissTimer = setTimeout(() => {
+          dismissAlertMessage();
+        }, 6000);
+      }
+    }
+
+    function dismissAlertMessage() {
+      const alertBox = document.getElementById('formAlert');
+      if (alertBox) {
+        alertBox.classList.add('d-none');
+        alertBox.innerHTML = '';
+      }
+      if (alertDismissTimer) {
+        clearTimeout(alertDismissTimer);
+        alertDismissTimer = null;
+      }
+    }
+
+    function computeSynchronizedOrderNumbers(orderList) {
+      const list = orderList || [];
+      const total = list.length;
+      const result = new Array(total);
+
+      for (let i = 0; i < total; i++) {
+        const seqNum = Math.max(1, total - i);
+        result[i] = String(seqNum).padStart(2, '0');
+      }
+      return result;
+    }
+
+    // Strict Indian Standard Time (IST) DD/MM/YYYY hh:mm AM/PM generator
+    function getIndianDateTime(dateInput) {
+      const now = dateInput ? new Date(dateInput) : new Date();
+      const validDate = isNaN(now.getTime()) ? new Date() : now;
+      try {
+        const istOptions = {
+          timeZone: 'Asia/Kolkata',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
+        };
+        const parts = new Intl.DateTimeFormat('en-GB', istOptions).formatToParts(validDate);
+        const map = {};
+        parts.forEach(p => { map[p.type] = p.value; });
+        const dayPeriod = (map.dayPeriod || '').toUpperCase();
+        return {
+          dateOnly: `${map.day}/${map.month}/${map.year}`,
+          fullDateTime: `${map.day}/${map.month}/${map.year} ${map.hour}:${map.minute} ${dayPeriod}`
+        };
+      } catch (e) {
+        const utc = validDate.getTime() + (validDate.getTimezoneOffset() * 60000);
+        const ist = new Date(utc + (3600000 * 5.5));
+        const dd = String(ist.getDate()).padStart(2, '0');
+        const mm = String(ist.getMonth() + 1).padStart(2, '0');
+        const yyyy = ist.getFullYear();
+        let h = ist.getHours();
+        const ampm = h >= 12 ? 'PM' : 'AM';
+        h = h % 12 || 12;
+        const min = String(ist.getMinutes()).padStart(2, '0');
+        return {
+          dateOnly: `${dd}/${mm}/${yyyy}`,
+          fullDateTime: `${dd}/${mm}/${yyyy} ${String(h).padStart(2, '0')}:${min} ${ampm}`
+        };
+      }
+    }
+
+    function formatOrderDateTimeIST(ord) {
+      const rawStr = String((ord && (ord.submissionTime || ord.time)) || '').trim();
+      const dateMatch = rawStr.match(/(\d{2}\/\d{2}\/\d{4})/);
+      const time12Match = rawStr.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
+      const time24Match = rawStr.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/);
+
+      const fallbackDate = ord && ord.submissionDate && /^\d{2}\/\d{2}\/\d{4}$/.test(String(ord.submissionDate).trim())
+        ? String(ord.submissionDate).trim()
+        : getIndianDateTime().dateOnly;
+
+      if (dateMatch && time12Match) {
+        return `${dateMatch[1]} ${time12Match[1].toUpperCase()}`;
+      }
+
+      if (time12Match) {
+        return `${fallbackDate} ${time12Match[1].toUpperCase()}`;
+      }
+
+      if (time24Match) {
+        let hour24 = parseInt(time24Match[1], 10);
+        const mins = time24Match[2];
+        const ampm = hour24 >= 12 ? 'PM' : 'AM';
+        hour24 = hour24 % 12;
+        hour24 = hour24 === 0 ? 12 : hour24;
+        const hour12Str = String(hour24).padStart(2, '0');
+        return `${dateMatch ? dateMatch[1] : fallbackDate} ${hour12Str}:${mins} ${ampm}`;
+      }
+
+      if (rawStr) {
+        const parsed = new Date(rawStr);
+        if (!isNaN(parsed.getTime())) {
+          return getIndianDateTime(parsed).fullDateTime;
+        }
+        return `${fallbackDate} ${rawStr}`;
+      }
+
+      return getIndianDateTime().fullDateTime;
+    }
+
+    function generateUploadSessionId() {
+      const rand = Math.random().toString(36).slice(2, 10);
+      return `mkp_${Date.now()}_${rand}`;
+    }
+
+    function buildUploadBatches(filesList) {
+      const batches = [];
+      let currentBatch = [];
+      let currentBytes = 0;
+
+      for (let i = 0; i < filesList.length; i++) {
+        const file = filesList[i];
+        const fileSize = Math.max(0, Number(file.size) || 0);
+        const wouldExceedCount = currentBatch.length >= UPLOAD_BATCH_MAX_FILES;
+        const wouldExceedBytes = currentBatch.length > 0 && (currentBytes + fileSize > UPLOAD_BATCH_MAX_BYTES);
+
+        if (wouldExceedCount || wouldExceedBytes) {
+          batches.push(currentBatch);
+          currentBatch = [];
+          currentBytes = 0;
+        }
+
+        currentBatch.push({ file, index: i });
+        currentBytes += fileSize;
+      }
+
+      if (currentBatch.length > 0) {
+        batches.push(currentBatch);
+      }
+
+      return batches;
+    }
+
+    function sleepDelay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function postJsonWithTimeoutAndRetry(payloadObj, timeoutMs = UPLOAD_REQUEST_TIMEOUT_MS, maxRetries = UPLOAD_MAX_RETRIES) {
+      let lastError = null;
+
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        const timerId = controller
+          ? setTimeout(() => {
+              try { controller.abort(); } catch (e) {}
+            }, timeoutMs)
+          : null;
+
+        try {
+          const fetchOptions = {
+            method: 'POST',
+            redirect: 'follow',
+            body: JSON.stringify(payloadObj)
+          };
+          if (controller) {
+            fetchOptions.signal = controller.signal;
+          }
+
+          const res = await fetch(SCRIPT_URL, fetchOptions);
+          if (timerId) clearTimeout(timerId);
+
+          const rawText = await res.text();
+          let parsed = {};
+          if (rawText && rawText.trim()) {
+            try {
+              parsed = JSON.parse(rawText);
+            } catch (parseErr) {
+              if (res.ok && !/error|exception|unauthorized|fail/i.test(rawText)) {
+                parsed = { status: 'success' };
+              } else {
+                throw new Error(rawText.slice(0, 140) || "Invalid server response");
+              }
+            }
+          } else if (res.ok) {
+            parsed = { status: 'success' };
+          }
+
+          if (parsed && (parsed.status === 'success' || parsed.ok === true)) {
+            return parsed;
+          }
+
+          const serverMsg = (parsed && (parsed.message || parsed.error)) || "Server rejected batch";
+          throw new Error(serverMsg);
+        } catch (err) {
+          if (timerId) clearTimeout(timerId);
+          lastError = (err && err.name === 'AbortError')
+            ? new Error("Request timed out while uploading batch")
+            : err;
+
+          if (attempt < maxRetries) {
+            await sleepDelay(500 * attempt);
+          }
+        }
+      }
+
+      throw lastError || new Error("Upload request failed after retries");
+    }
+
+    function markBatchFilesSent(batchItems) {
+      batchItems.forEach(({ index: i }) => {
+        setFileRowUIStatus(i, 'Sent');
+      });
+    }
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      if (selectedFiles.length === 0) {
+        showMessage("Select at least one file first.", "danger");
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      const clearBtn = document.getElementById('clearAllBtn');
+      const modalClearBtn = document.getElementById('modalClearAllBtn');
+      const progressSection = document.getElementById('progressSection');
+      const progressBar = document.getElementById('progressBar');
+      const progressStatusText = document.getElementById('progressStatusText');
+      const progressPercentText = document.getElementById('progressPercentText');
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `SENDING... DO NOT CLOSE`;
+      }
+      if (clearBtn) clearBtn.style.pointerEvents = 'none';
+      if (modalClearBtn) modalClearBtn.style.pointerEvents = 'none';
+      if (progressSection) progressSection.classList.remove('d-none');
+      if (progressBar) progressBar.style.width = `2%`;
+      if (progressPercentText) progressPercentText.textContent = `0%`;
+      if (progressStatusText) progressStatusText.textContent = `Sending files...`;
+      document.querySelectorAll('.file-remove-btn').forEach(b => { b.style.display = 'none'; });
+
+      const totalFiles = selectedFiles.length;
+      const uploadId = generateUploadSessionId();
+      const istData = getIndianDateTime();
+      const custNameVal = document.getElementById('custName').value.trim();
+      const colorModeVal = document.getElementById('colorMode').value;
+      const numCopiesVal = document.getElementById('numCopies').value;
+      const paperSizeVal = document.getElementById('paperSize').value;
+      const printSidesVal = document.getElementById('printSides').value;
+      const paperTypeVal = document.getElementById('paperType').value;
+      const custNoteVal = document.getElementById('custNote').value.trim() || 'None';
+
+      const batches = buildUploadBatches(selectedFiles);
+      let sentFilesCount = 0;
+
+      try {
+        for (let bIdx = 0; bIdx < batches.length; bIdx++) {
+          const currentBatch = batches[bIdx];
+          const isFirstBatch = bIdx === 0;
+          const isLastBatch = bIdx === batches.length - 1;
+
+          if (progressStatusText) {
+            progressStatusText.textContent = `Sending batch ${bIdx + 1} of ${batches.length}...`;
+          }
+
+          const batchFilesPayload = [];
+          for (let j = 0; j < currentBatch.length; j++) {
+            const { file, index: fileIdx } = currentBatch[j];
+            setFileRowUIStatus(fileIdx, 'Sending');
+            const base64Data = await readFileAsBase64(file);
+            batchFilesPayload.push({
+              fileName: file.name,
+              fileType: file.type || 'application/octet-stream',
+              fileData: base64Data,
+              fileIndex: fileIdx + 1
+            });
+          }
+
+          const batchPayload = {
+            action: 'submitOrder',
+            uploadId: uploadId,
+            batchIndex: bIdx + 1,
+            totalBatches: batches.length,
+            isFirstBatch: isFirstBatch,
+            isLastBatch: isLastBatch,
+            createOrderRow: isFirstBatch,
+            finalizeOrder: isLastBatch,
+            totalFilesCount: totalFiles,
+            name: custNameVal,
+            color: colorModeVal,
+            copies: numCopiesVal,
+            size: paperSizeVal,
+            sides: printSidesVal,
+            paperType: paperTypeVal,
+            note: custNoteVal,
+            submissionDate: istData.dateOnly,
+            submissionTime: istData.fullDateTime,
+            files: batchFilesPayload
+          };
+
+          try {
+            await postJsonWithTimeoutAndRetry(batchPayload);
+          } catch (batchErr) {
+            currentBatch.forEach(({ index: fileIdx }) => setFileRowUIStatus(fileIdx, 'Failed'));
+            throw batchErr;
+          }
+
+          markBatchFilesSent(currentBatch);
+          sentFilesCount += currentBatch.length;
+
+          const completedPercent = Math.round((sentFilesCount / totalFiles) * 100);
+          if (progressBar) progressBar.style.width = `${completedPercent}%`;
+          if (progressPercentText) progressPercentText.textContent = `${completedPercent}%`;
+        }
+
+        if (progressBar) progressBar.style.width = `100%`;
+        if (progressPercentText) progressPercentText.textContent = `100%`;
+        if (progressStatusText) progressStatusText.textContent = `Upload complete`;
+
+        showMessage(
+          "📄 Thank you! Your files have been received for printing. Kindly mention your Name or File Name so we can print it right away.",
+          "success",
+          true
+        );
+        const printForm = document.getElementById('printForm');
+        if (printForm) printForm.reset();
+        selectedFiles = [];
+        fileUploadStatuses = [];
+        cameraImgCounter = 0;
+        updateFileListUI();
+        closeFilesPopup();
+      } catch (err) {
+        showMessage(
+          (err && err.message) ? `Upload failed: ${err.message}` : "Error uploading files. Check connection.",
+          "danger"
+        );
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="bi bi-send-fill me-1"></i> Send Files for Printing`;
+        }
+        if (clearBtn) clearBtn.style.pointerEvents = 'auto';
+        if (modalClearBtn) modalClearBtn.style.pointerEvents = 'auto';
+        document.querySelectorAll('.file-remove-btn').forEach(b => { b.style.display = ''; });
+        if (progressSection) progressSection.classList.add('d-none');
+        if (progressBar) progressBar.style.width = `0%`;
+        if (progressPercentText) progressPercentText.textContent = `0%`;
+        if (progressStatusText) progressStatusText.textContent = `Preparing upload...`;
+      }
+    }
+
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const resultStr = String(reader.result || '');
+          const commaIndex = resultStr.indexOf(',');
+          resolve(commaIndex >= 0 ? resultStr.slice(commaIndex + 1) : resultStr);
+        };
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function fetchOrders() {
+      if (!sessionPin) return;
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=getOrders&pin=${encodeURIComponent(sessionPin)}`, {
+          method: 'GET',
+          redirect: 'follow'
+        });
+        const rawText = await res.text();
+        const data = JSON.parse(rawText);
+
+        if (data.status === 'unauthorized') {
+          lockQueue();
+          return;
+        }
+
+        if (data.status === 'success' || Array.isArray(data)) {
+          const istNow = getIndianDateTime();
+          const rawList = Array.isArray(data) ? data : (data.orders || []);
+          orders = syncOrdersSequence(rawList, istNow.dateOnly);
+          renderQueue();
+        }
+      } catch (err) {
+        console.error("Error fetching orders", err);
+      }
+    }
+
+    function extractDriveFileId(fileObj) {
+      if (!fileObj) return null;
+      if (fileObj.fileId) return fileObj.fileId;
+      if (!fileObj.fileUrl) return null;
+      const match = String(fileObj.fileUrl).match(/\/d\/([^\/]+)/);
+      return match ? match[1] : null;
+    }
+
+    function getDirectDownloadUrl(fileObj) {
+      const id = extractDriveFileId(fileObj);
+      if (id) return `https://drive.google.com/uc?export=download&id=${id}`;
+      return (fileObj && fileObj.fileUrl) ? fileObj.fileUrl : '#';
+    }
+
+    function openOrderFilesPopup(orderIndex) {
+      const ord = orders[orderIndex];
+      const modal = document.getElementById('orderFilesModal');
+      const titleEl = document.getElementById('orderModalTitle');
+      const subtitleEl = document.getElementById('orderModalSubtitle');
+      const listEl = document.getElementById('orderModalFileListContainer');
+      const zipBtn = document.getElementById('orderModalZipBtn');
+      if (!ord || !modal || !listEl) return;
+
+      currentOrderModalIndex = orderIndex;
+      const filesArr = Array.isArray(ord.files) ? ord.files : [];
+      if (titleEl) {
+        titleEl.textContent = `Order #${ord.orderNo || ''} — ${ord.name || 'Order'}`;
+      }
+      if (subtitleEl) {
+        subtitleEl.textContent = `${filesArr.length} File(s) • ${formatOrderDateTimeIST(ord)}`;
+      }
+
+      listEl.innerHTML = filesArr.map((f, idx) => {
+        const dlUrl = getDirectDownloadUrl(f);
+        return `
+          <div class="queue-file-row">
+            <span class="text-truncate me-2 small" style="max-width: 72%;" title="${escapeHtml(f.fileName)}">
+              <span class="text-muted fw-semibold me-1">${idx + 1}.</span>
+              <a href="${escapeHtml(f.fileUrl || '#')}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                ${escapeHtml(f.fileName)}
+              </a>
+            </span>
+            <a href="${escapeHtml(dlUrl)}" target="_blank" rel="noopener noreferrer" download="${escapeHtml(f.fileName)}" class="btn btn-outline-success btn-sm py-0 px-2" style="font-size: 11px;">
+              <i class="bi bi-download me-1"></i> Download
+            </a>
+          </div>
+        `;
+      }).join('');
+
+      if (zipBtn) {
+        zipBtn.onclick = () => downloadAllAsZip(orderIndex);
+      }
+
+      modal.classList.remove('d-none');
+    }
+
+    function closeOrderFilesPopup() {
+      const modal = document.getElementById('orderFilesModal');
+      currentOrderModalIndex = null;
+      if (modal) {
+        modal.classList.add('d-none');
+      }
+    }
+
+    function renderQueue() {
+      const container = document.getElementById('queueList');
+      if (!container) return;
+
+      if (orders.length === 0) {
+        container.innerHTML = `<div class="col-12 text-center py-5 text-muted">No print orders in queue.</div>`;
+        return;
+      }
+
+      const computedOrderNumbers = computeSynchronizedOrderNumbers(orders);
+
+      container.innerHTML = orders.map((ord, idx) => {
+        const displayTime = formatOrderDateTimeIST(ord);
+        const syncedOrderStr = computedOrderNumbers[idx];
+        ord.orderNo = syncedOrderStr;
+        const orderBadge = `Order #${syncedOrderStr}`;
+        const filesArr = Array.isArray(ord.files) ? ord.files : [];
+        return `
+          <div class="col-md-6 col-lg-4">
+            <div class="card p-3 h-100 d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-center mb-2 gap-1 flex-wrap">
+                <span class="badge bg-primary text-white fw-bold">${escapeHtml(orderBadge)}</span>
+                <span class="badge bg-secondary text-white"><i class="bi bi-calendar-event me-1"></i>${escapeHtml(displayTime)}</span>
+              </div>
+              <h5 class="fw-bold mb-2">${escapeHtml(ord.name)}</h5>
+
+              <div class="mb-2 d-flex flex-wrap gap-1">
+                <span class="badge ${ord.color === 'Color' ? 'badge-color' : 'badge-bw'}">${escapeHtml(ord.color)}</span>
+                <span class="badge bg-primary text-white">${escapeHtml(ord.copies)} Copies</span>
+                <span class="badge bg-info text-dark">${escapeHtml(ord.size)}</span>
+                <span class="badge bg-warning text-dark">${escapeHtml(ord.paperType)}</span>
+                <span class="badge bg-dark text-white">${escapeHtml(ord.sides)}</span>
+              </div>
+
+              ${ord.note && ord.note !== 'None' ? `
+                <div class="alert alert-warning py-1 px-2 small mb-2">
+                  <i class="bi bi-pencil-square me-1"></i> <strong>Note:</strong> ${escapeHtml(ord.note)}
+                </div>
+              ` : ''}
+
+              <div class="bg-light p-2 rounded small mb-3 flex-grow-1">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <strong>Files (${filesArr.length}):</strong>
+                  ${filesArr.length > 4 ? `
+                    <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" style="font-size: 11px;" onclick="openOrderFilesPopup(${idx})">
+                      <i class="bi bi-arrows-fullscreen me-1"></i> View All (${filesArr.length})
+                    </button>
+                  ` : ''}
+                </div>
+                <div class="queue-files-scroll">
+                  ${filesArr.map((f, fIdx) => {
+                    const dlUrl = getDirectDownloadUrl(f);
+                    return `
+                      <div class="queue-file-row">
+                        <span class="text-truncate me-1" style="max-width: 68%;" title="${escapeHtml(f.fileName)}">
+                          <span class="text-muted fw-semibold me-1">${fIdx + 1}.</span>
+                          <a href="${escapeHtml(f.fileUrl || '#')}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                            ${escapeHtml(f.fileName)}
+                          </a>
+                        </span>
+                        <a href="${escapeHtml(dlUrl)}" target="_blank" rel="noopener noreferrer" download="${escapeHtml(f.fileName)}" class="btn btn-outline-success btn-sm py-0 px-2" style="font-size: 11px;" title="Download single file">
+                          <i class="bi bi-download me-1"></i> Download
+                        </a>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
+              <div class="mt-auto d-grid gap-2">
+                <button type="button" onclick="downloadAllAsZip(${idx})" id="zipBtn_${idx}" class="btn btn-primary btn-sm fw-bold">
+                  <i class="bi bi-file-earmark-zip-fill me-1"></i> Download All as ZIP (${filesArr.length} Files)
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function downloadAllAsZip(orderIndex) {
+      const ord = orders[orderIndex];
+      if (!ord || !Array.isArray(ord.files) || ord.files.length === 0) return;
+
+      if (typeof window.JSZip === 'undefined') {
+        showNoticeModal("ZIP library is unavailable or still loading. You can download individual files directly using each file's Download button.");
+        return;
+      }
+
+      const btn = document.getElementById(`zipBtn_${orderIndex}`);
+      const originalText = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `Preparing ZIP...`;
+      }
+
+      const zip = new window.JSZip();
+      let successCount = 0;
+
+      try {
+        for (let i = 0; i < ord.files.length; i++) {
+          const f = ord.files[i];
+          const fileId = extractDriveFileId(f);
+          if (!fileId) continue;
+
+          if (btn) {
+            btn.innerHTML = `Zipping (${i + 1}/${ord.files.length})...`;
+          }
+
+          const response = await fetch(`${SCRIPT_URL}?action=getFileBase64&pin=${encodeURIComponent(sessionPin)}&fileId=${encodeURIComponent(fileId)}`);
+          const fileData = await response.json();
+
+          if (fileData && fileData.status === 'success' && fileData.base64) {
+            zip.file(f.fileName, fileData.base64, { base64: true });
+            successCount++;
+          }
+        }
+
+        if (successCount > 0) {
+          const content = await zip.generateAsync({ type: "blob" });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(content);
+          const safeOrderNo = ord.orderNo ? `Order_${ord.orderNo}_` : '';
+          link.download = `${safeOrderNo}${String(ord.name || 'Order').replace(/[^a-z0-9]/gi, '_')}_files.zip`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(link.href);
+        } else {
+          showNoticeModal("Could not fetch files for ZIP. Please try downloading individually.");
+        }
+      } catch (e) {
+        showNoticeModal("Error generating ZIP file.");
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }
+      }
+    }
+
+    function clearQueue() {
+      openConfirmModal("Clear queue list? (Files in Google Drive will remain saved)", async () => {
+        try {
+          const res = await fetch(`${SCRIPT_URL}?action=clearOrders&pin=${encodeURIComponent(sessionPin)}`);
+          const data = await res.json();
+          if (data && data.status === 'success') {
+            orders = [];
+            renderQueue();
+          }
+        } catch (err) {
+          showNoticeModal("Error clearing queue.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
