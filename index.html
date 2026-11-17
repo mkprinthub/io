@@ -840,8 +840,8 @@
           audio: false,
           video: {
             facingMode: { ideal: 'environment' },
-            width: { ideal: 720 },
-            height: { ideal: 1280 }
+            width: { ideal: 1080 },
+            height: { ideal: 1920 }
           }
         },
         {
@@ -908,8 +908,8 @@
       }
 
       try {
-        const vw = video.videoWidth || 720;
-        const vh = video.videoHeight || 1280;
+        const vw = video.videoWidth || 1080;
+        const vh = video.videoHeight || 1920;
         if (!vw || !vh) {
           showCameraFeedback("Loading camera frame...", "bg-warning text-dark");
           return;
