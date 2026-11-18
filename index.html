@@ -520,7 +520,7 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRO0bbbm5yhNtYFBBO5ctzyKe-TsTFDBGptjl-k849m7iIuzPGpZ5mRmOsxH5uDGQY/exec";
     const UPLOAD_BATCH_MAX_FILES = 5;
-    const UPLOAD_BATCH_MAX_BYTES = 4 * 1024 * 1024; // ~4 MB per batch
+    const UPLOAD_BATCH_MAX_BYTES = 8 * 1024 * 1024; // ~8 MB per batch for higher-clarity photos
     const UPLOAD_REQUEST_TIMEOUT_MS = 90000;
     const UPLOAD_MAX_RETRIES = 3;
 
@@ -833,6 +833,7 @@
             facingMode: { ideal: 'environment' },
             width: { ideal: 1080 },
             height: { ideal: 1920 },
+            frameRate: { ideal: 30, max: 30 },
             aspectRatio: { ideal: 0.5625 }
           }
         },
@@ -840,8 +841,9 @@
           audio: false,
           video: {
             facingMode: { ideal: 'environment' },
-            width: { ideal: 1080 },
-            height: { ideal: 1920 }
+            width: { ideal: 720 },
+            height: { ideal: 1280 },
+            frameRate: { ideal: 30, max: 30 }
           }
         },
         {
@@ -908,8 +910,8 @@
       }
 
       try {
-        const vw = video.videoWidth || 1080;
-        const vh = video.videoHeight || 1920;
+        const vw = video.videoWidth || 720;
+        const vh = video.videoHeight || 1280;
         if (!vw || !vh) {
           showCameraFeedback("Loading camera frame...", "bg-warning text-dark");
           return;
@@ -929,17 +931,19 @@
           sy = Math.max(0, Math.round((vh - cropH) / 2));
         }
 
-        const outW = Math.min(1920, cropW);
+        const outW = Math.min(2160, cropW);
         const outH = Math.round(outW / targetAspect);
         canvas.width = outW;
         canvas.height = outH;
 
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: false });
         if (!ctx) {
           showCameraFeedback("Canvas unavailable", "bg-danger text-white");
           return;
         }
 
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
         ctx.drawImage(video, sx, sy, cropW, cropH, 0, 0, outW, outH);
 
         canvas.toBlob((blob) => {
@@ -956,8 +960,8 @@
           addFiles([photoFile]);
           resequenceCameraImgFiles();
           updateFileListUI();
-          showCameraFeedback(`${fileName}`, "bg-success text-white");
-        }, 'image/jpeg', 0.92);
+          showCameraFeedback(`${fileName} (2x Clarity)`, "bg-success text-white");
+        }, 'image/jpeg', 0.97);
       } catch (err) {
         showCameraFeedback("Unable to capture photo", "bg-danger text-white");
       }
