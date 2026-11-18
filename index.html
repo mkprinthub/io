@@ -520,7 +520,7 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRO0bbbm5yhNtYFBBO5ctzyKe-TsTFDBGptjl-k849m7iIuzPGpZ5mRmOsxH5uDGQY/exec";
     const UPLOAD_BATCH_MAX_FILES = 5;
-    const UPLOAD_BATCH_MAX_BYTES = 4 * 1024 * 1024; // ~4 MB per batch
+    const UPLOAD_BATCH_MAX_BYTES = 8 * 1024 * 1024; // ~8 MB per batch for higher-clarity photos
     const UPLOAD_REQUEST_TIMEOUT_MS = 90000;
     const UPLOAD_MAX_RETRIES = 3;
 
@@ -831,26 +831,19 @@
           audio: false,
           video: {
             facingMode: { ideal: 'environment' },
-            width: { ideal: 4096 },
-            height: { ideal: 4096 },
-            frameRate: { ideal: 30, max: 60 }
+            width: { ideal: 1080 },
+            height: { ideal: 1920 },
+            frameRate: { ideal: 30, max: 30 },
+            aspectRatio: { ideal: 0.5625 }
           }
         },
         {
           audio: false,
           video: {
             facingMode: { ideal: 'environment' },
-            width: { ideal: 2160 },
-            height: { ideal: 3840 },
-            frameRate: { ideal: 30 }
-          }
-        },
-        {
-          audio: false,
-          video: {
-            facingMode: { ideal: 'environment' },
-            width: { ideal: 1920 },
-            height: { ideal: 1080 }
+            width: { ideal: 720 },
+            height: { ideal: 1280 },
+            frameRate: { ideal: 30, max: 30 }
           }
         },
         {
@@ -884,32 +877,6 @@
       try {
         const tracks = acquiredStream.getVideoTracks ? acquiredStream.getVideoTracks() : [];
         cameraTrack = tracks.length > 0 ? tracks[0] : null;
-        if (cameraTrack && typeof cameraTrack.getCapabilities === 'function' && typeof cameraTrack.applyConstraints === 'function') {
-          const caps = cameraTrack.getCapabilities() || {};
-          const maxConstraints = {};
-          const advConstraints = [];
-          if (caps.width && caps.width.max) {
-            maxConstraints.width = { ideal: caps.width.max };
-          }
-          if (caps.height && caps.height.max) {
-            maxConstraints.height = { ideal: caps.height.max };
-          }
-          if (Array.isArray(caps.focusMode) && caps.focusMode.includes('continuous')) {
-            advConstraints.push({ focusMode: 'continuous' });
-          }
-          if (Array.isArray(caps.exposureMode) && caps.exposureMode.includes('continuous')) {
-            advConstraints.push({ exposureMode: 'continuous' });
-          }
-          if (Array.isArray(caps.whiteBalanceMode) && caps.whiteBalanceMode.includes('continuous')) {
-            advConstraints.push({ whiteBalanceMode: 'continuous' });
-          }
-          if (advConstraints.length > 0) {
-            maxConstraints.advanced = advConstraints;
-          }
-          if (Object.keys(maxConstraints).length > 0) {
-            await cameraTrack.applyConstraints(maxConstraints).catch(() => {});
-          }
-        }
       } catch (e) {
         cameraTrack = null;
       }
@@ -964,12 +931,12 @@
           sy = Math.max(0, Math.round((vh - cropH) / 2));
         }
 
-        const outW = cropW;
-        const outH = cropH;
+        const outW = Math.min(2160, cropW);
+        const outH = Math.round(outW / targetAspect);
         canvas.width = outW;
         canvas.height = outH;
 
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: false });
         if (!ctx) {
           showCameraFeedback("Canvas unavailable", "bg-danger text-white");
           return;
@@ -993,8 +960,8 @@
           addFiles([photoFile]);
           resequenceCameraImgFiles();
           updateFileListUI();
-          showCameraFeedback(`${fileName}`, "bg-success text-white");
-        }, 'image/jpeg', 0.96);
+          showCameraFeedback(`${fileName} (2x Clarity)`, "bg-success text-white");
+        }, 'image/jpeg', 0.97);
       } catch (err) {
         showCameraFeedback("Unable to capture photo", "bg-danger text-white");
       }
